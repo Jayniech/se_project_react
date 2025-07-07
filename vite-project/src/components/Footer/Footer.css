@@ -1,0 +1,16 @@
+.footer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.foorter__name {
+  font-size: 16px;
+  line-height: 1.25;
+  font-weight: 500;
+}
+
+.foorter__date {
+  font-size: 16px;
+  line-height: 1.25;
+  font-weight: 500;
+}
