@@ -1,0 +1,87 @@
+/* TODO
+    - Set hover properties on close and submit buttons
+    - Set active state for radio buttons when selected
+    - Make the close button and form features functional */
+
+.modal {
+  position: fixed;
+  inset: 0; /* Use this when all positions are being set to the same value.*/
+  background-color: rgba(0, 0, 0, 0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal__content {
+  background-color: #fff;
+  border-radius: 20px;
+  padding: 28px 28px 36px;
+  position: relative;
+  max-width: 496px;
+  width: 100%;
+  box-sizing: border-box;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 1.25;
+}
+
+.modal__form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.modal__close-btn {
+  background-image: url(../../assets/close-btn.svg);
+  width: 20px;
+  height: 20px;
+  border: none;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: absolute;
+  top: 20px;
+  right: 28px;
+  background-color: transparent;
+}
+
+.modal__title {
+  margin: 0 0 24px;
+}
+
+.modal__radio-btns {
+  display: flex;
+  flex-direction: column;
+  border: none;
+  padding: 0 0 8px;
+  margin: 0;
+  gap: 8px;
+}
+
+.modal__radio-title {
+  margin: 0 0 12px;
+}
+
+.modal__input {
+  border: none;
+  border-bottom: 1px solid #000;
+}
+
+.modal__label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.modal__radio-label {
+  opacity: 0.5;
+}
+
+.modal__submit-btn {
+  max-width: 124px;
+  padding: 8px 16px;
+  border: none;
+  color: #fff;
+  background-color: #000;
+  border-radius: 4px;
+  opacity: 0.3;
+}
