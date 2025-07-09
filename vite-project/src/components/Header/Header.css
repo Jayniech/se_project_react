@@ -43,6 +43,10 @@
   line-height: 1.2;
 }
 
+.header__add-clothes-btn:hover {
+  cursor: pointer;
+}
+
 .header__column {
   display: flex;
   align-items: center;
