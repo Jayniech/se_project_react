@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import "./App.css";
 import Header from "../Header/Header";
@@ -6,9 +6,14 @@ import Main from "../Main/Main";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import ItemModal from "../ItemModal/ItemModal";
 import Footer from "../Footer/Footer";
-
+import { getWeather, filterWeatherData } from "../../utils/weatherApi";
+import { defaultCoordinates, APIkey } from "../../utils/constants";
 function App() {
-  const [weatherData, setWeatherData] = useState({ type: "cold" });
+  const [weatherData, setWeatherData] = useState({
+    type: "",
+    temp: { F: 999 },
+    city: "",
+  });
   const [activeModal, setActiveModal] = useState("");
   const [selectedCard, setSelectedCard] = useState({});
 
@@ -25,10 +30,19 @@ function App() {
     setActiveModal("");
   };
 
+  useEffect(() => {
+    getWeather(defaultCoordinates, APIkey)
+      .then((data) => {
+        const filteredData = filterWeatherData(data);
+        setWeatherData(filteredData);
+      })
+      .catch(console.error);
+  }, []);
+
   return (
     <div className="page">
       <div className="page__content">
-        <Header handleAddClick={handleAddClick} />
+        <Header handleAddClick={handleAddClick} weatherData={weatherData} />
         <Main weatherData={weatherData} handleCardClick={handleCardClick} />
         <Footer />
       </div>
@@ -60,7 +74,10 @@ function App() {
         </label>
         <fieldset className="modal__radio-btns">
           <legend className="modal__radio-title">Select weather type:</legend>
-          <label htmlFor="hot" className="modal__radio-label">
+          <label
+            htmlFor="hot"
+            className="modal__radio-label modal__radio-label_active"
+          >
             <input
               type="radio"
               id="hot"

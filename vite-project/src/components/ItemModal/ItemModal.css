@@ -1,3 +1,28 @@
 .modal__close-btn_type_image {
   background-image: url(../../assets/close-btn_light.svg);
+  top: 24px;
+  right: 24px;
+}
+
+.modal__content_type_image {
+  padding: 0;
+  overflow: hidden;
+  max-width: 498px;
+}
+
+.modal__image {
+}
+
+.modal__footer {
+  padding: 0 0 32px 32px;
+  font-size: 20px;
+  line-height: 1.2;
+}
+
+.modal__caption {
+  margin: 20px 0 0;
+}
+
+.modal__weather {
+  margin: 12px 0 0;
 }

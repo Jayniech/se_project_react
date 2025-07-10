@@ -1,19 +1,29 @@
-import { API_KEY, DEFAULT_COORDINATES } from "./constants";
-
-function weatherApi() {
-  console.log("Starting weather API call...");
-  fetch(
-    `https://api.openweathermap.org/data/2.5/weather?lat=${DEFAULT_COORDINATES.latitude}&lon=${DEFAULT_COORDINATES.longitude}&units=imperial&appid=${API_KEY}`
-  )
-    .then((res) => {
+export const getWeather = ({ latitude, longitude }, APIkey) => {
+  return fetch(
+    `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=imperial&appid=${APIkey}`
+  ).then((res) => {
+    if (res.ok) {
       return res.json();
-    })
-    .then((data) => {
-      console.log(data);
-    })
-    .catch((error) => {
-      console.log("Error:", error);
-    });
-}
+    } else {
+      return Promise.reject(`Erroe: ${res.status}`);
+    }
+  });
+};
 
-weatherApi();
+export const filterWeatherData = (data) => {
+  const result = {};
+  result.city = data.name;
+  result.temp = { F: data.main.temp };
+  result.type = getWeatherType(result.temp.F);
+  return result;
+};
+
+const getWeatherType = (temperature) => {
+  if (temperature > 86) {
+    return "hot";
+  } else if (temperature > 66) {
+    return "warm";
+  } else {
+    return "cold";
+  }
+};

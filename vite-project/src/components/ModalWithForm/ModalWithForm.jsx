@@ -20,7 +20,10 @@ function ModalWithForm({
         <p className="modal__title">{title}</p>
         <form id="add-garment-modal" className="modal__form">
           {children}
-          <button type="submit" className="modal__submit-btn">
+          <button
+            type="submit"
+            className="modal__submit-btn modal__submit-btn_disable"
+          >
             {buttonText}
           </button>
         </form>

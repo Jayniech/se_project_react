@@ -1,8 +1,3 @@
-/* TODO
-    - Set hover properties on close and submit buttons
-    - Set active state for radio buttons when selected
-    - Make the close button and form features functional */
-
 .modal {
   position: fixed;
   inset: 0; /* Use this when all positions are being set to the same value.*/
@@ -51,6 +46,12 @@
   top: 20px;
   right: 28px;
   background-color: transparent;
+  transition: transform 0.15s linear;
+}
+
+.modal__close-btn:hover {
+  cursor: pointer;
+  transform: scale(1.2);
 }
 
 .modal__title {
@@ -84,6 +85,13 @@
 .modal__radio-label {
   opacity: 0.5;
 }
+.modal__radio-input {
+  accent-color: black;
+}
+
+.modal__radio-label_active {
+  opacity: 1;
+}
 
 .modal__submit-btn {
   max-width: 124px;
@@ -92,5 +100,20 @@
   color: #fff;
   background-color: #000;
   border-radius: 4px;
+  opacity: 1;
+  transition: opacity 0.35s linear;
+}
+
+.modal__submit-btn:hover {
+  cursor: pointer;
+  opacity: 0.6;
+}
+
+.modal__submit-btn_disable {
   opacity: 0.3;
+}
+
+.modal__submit-btn_disable:hover {
+  cursor: not-allowed;
+  opacity: 0.3; /* This is here for simulation purposes until the modal is fully functional */
 }

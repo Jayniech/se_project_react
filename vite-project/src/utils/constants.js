@@ -1,6 +1,6 @@
-export const API_KEY = "cb6beda06d42050ba5e2ee36a20566c8";
+export const APIkey = "cb6beda06d42050ba5e2ee36a20566c8";
 
-export const DEFAULT_COORDINATES = {
+export const defaultCoordinates = {
   latitude: 41.8781,
   longitude: -87.6298,
 };
