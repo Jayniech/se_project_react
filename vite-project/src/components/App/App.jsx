@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-
 import "./App.css";
 import Header from "../Header/Header";
 import Main from "../Main/Main";
@@ -8,6 +7,7 @@ import ItemModal from "../ItemModal/ItemModal";
 import Footer from "../Footer/Footer";
 import { getWeather, filterWeatherData } from "../../utils/weatherApi";
 import { defaultCoordinates, APIkey } from "../../utils/constants";
+
 function App() {
   const [weatherData, setWeatherData] = useState({
     type: "",
@@ -33,6 +33,7 @@ function App() {
   useEffect(() => {
     getWeather(defaultCoordinates, APIkey)
       .then((data) => {
+        console.log("API data received:", data);
         const filteredData = filterWeatherData(data);
         setWeatherData(filteredData);
       })
