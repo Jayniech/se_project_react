@@ -26,4 +26,18 @@ The idea of the application is pretty simple - we make a call to an API, which t
 
 **Technologies**
 
+- OpenWeather API
+- HTML 5
+- CSS
+- React
+- Vite
+- React Hooks
+- Node Package Manager (NPM)
+- ES6 Modules
+- JavaScript
+
 **Images**
+
+- [Display of garment cards](./demo/card-display-screenshot.png)
+- [Header with dynamic WeatherCard](./demo/header-with-dynamic-weather-card.png)
+- [Image of modal form](./demo/modal-form-screenshot.png)
