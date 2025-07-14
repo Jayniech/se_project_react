@@ -11,8 +11,6 @@ export const getWeather = ({ latitude, longitude }, APIkey) => {
 };
 
 export const filterWeatherData = (data) => {
-  console.log("Raw API data:", data);
-
   const result = {};
   result.city = data.name;
   result.temp = { F: data.main.temp };
