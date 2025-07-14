@@ -6,13 +6,8 @@ function ModalWithForm({
   title,
   isOpen,
   handleCloseClick,
+  handleOverlayClick,
 }) {
-  const handleOverlayClick = (event) => {
-    if (event.target === event.currentTarget) {
-      handleCloseClick();
-    }
-  };
-
   return (
     <div
       onClick={handleOverlayClick}

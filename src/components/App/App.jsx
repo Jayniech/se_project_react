@@ -30,6 +30,12 @@ function App() {
     setActiveModal("");
   };
 
+  const handleOverlayClick = (event) => {
+    if (event.target === event.currentTarget) {
+      handleCloseClick();
+    }
+  };
+
   useEffect(() => {
     getWeather(defaultCoordinates, APIkey)
       .then((data) => {
@@ -38,10 +44,9 @@ function App() {
       })
       .catch(console.error);
 
-    if (!activeModal) return; // stop the effect not to add the listener if there is no active modal
+    if (!activeModal) return;
 
     const handleEscClose = (e) => {
-      // define the function inside useEffect not to lose the reference on rerendering
       if (e.key === "Escape") {
         handleCloseClick();
       }
@@ -50,7 +55,6 @@ function App() {
     document.addEventListener("keydown", handleEscClose);
 
     return () => {
-      // don't forget to add a clean up function for removing the listener
       document.removeEventListener("keydown", handleEscClose);
     };
   }, [activeModal]);
@@ -67,6 +71,7 @@ function App() {
         title="New garment"
         isOpen={activeModal === "add-garment"}
         handleCloseClick={handleCloseClick}
+        handleOverlayClick={handleOverlayClick}
       >
         <label htmlFor="garment-name-input" className="modal__label">
           Name
@@ -130,6 +135,7 @@ function App() {
         activeModal={activeModal}
         card={selectedCard}
         handleCloseClick={handleCloseClick}
+        handleOverlayClick={handleOverlayClick}
       />
     </div>
   );
