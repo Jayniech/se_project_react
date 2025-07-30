@@ -5,27 +5,25 @@ function ModalWithForm({
   buttonText,
   title,
   isOpen,
-  handleCloseClick,
-  handleOverlayClick,
+  onClose,
+  onOverlay,
+  onSubmit,
 }) {
   return (
     <div
-      onClick={handleOverlayClick}
+      onClick={onOverlay}
       className={`modal ${isOpen ? "modal_opened" : ""}`}
     >
       <div className="modal__content">
-        <button
-          onClick={handleCloseClick}
-          type="button"
-          className="modal__close-btn"
-        />
+        <button onClick={onClose} type="button" className="modal__close-btn" />
         <p className="modal__title">{title}</p>
-        <form id="add-garment-modal" className="modal__form">
+        <form
+          onSubmit={onSubmit}
+          id="add-garment-modal"
+          className="modal__form"
+        >
           {children}
-          <button
-            type="submit"
-            className="modal__submit-btn modal__submit-btn_disable"
-          >
+          <button type="submit" className="modal__submit-btn">
             {buttonText}
           </button>
         </form>

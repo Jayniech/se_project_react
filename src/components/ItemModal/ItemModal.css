@@ -1,14 +1,8 @@
-.modal__close-btn_type_image {
-  background-image: url(../../assets/close-btn_light.svg);
-  top: 24px;
-  right: 24px;
-}
-
-.modal__content_type_image {
+/* .modal__content_type_image {
   padding: 0;
   overflow: hidden;
   max-width: 498px;
-}
+} */
 
 .modal__footer {
   padding: 0 0 32px 32px;
