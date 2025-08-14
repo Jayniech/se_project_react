@@ -51,3 +51,8 @@
   align-items: center;
   gap: 24px;
 }
+
+.header__link {
+  text-decoration: none;
+  color: #000;
+}
