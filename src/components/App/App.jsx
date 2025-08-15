@@ -7,11 +7,15 @@ import Main from "../Main/Main";
 import ItemModal from "../ItemModal/ItemModal";
 import Footer from "../Footer/Footer";
 import { getWeather, filterWeatherData } from "../../utils/weatherApi";
-import { defaultCoordinates, APIkey } from "../../utils/constants";
+import {
+  defaultCoordinates,
+  APIkey,
+  defaultClothingItems,
+} from "../../utils/constants";
 import CurrentTemperatureUnitContext from "../../contexts/CurrentTemperatureUnitContext";
 import AddItemModal from "../AddItemModal/AddItemModal";
-import { defaultClothingItems } from "../../utils/constants";
 import Profile from "../Profile/Profile";
+import { getItems } from "../../utils/api";
 
 function App() {
   const [weatherData, setWeatherData] = useState({
@@ -53,9 +57,17 @@ function App() {
   const handleAddItemModalSubmit = ({ name, imageUrl, weather }) => {
     setClothingItems((prevItems) => [
       ...prevItems,
-      { name, link: imageUrl, weather },
+      { name, imageUrl: imageUrl, weather },
     ]);
     handleCloseClick();
+  };
+
+  const handleDeleteModalSubmit = (_id) => {
+    setClothingItems(
+      clothingItems.filter((item) => {
+        return item._id !== _id;
+      })
+    );
   };
 
   useEffect(() => {
@@ -81,6 +93,14 @@ function App() {
     };
   }, [activeModal]);
 
+  useEffect(() => {
+    getItems()
+      .then((data) => {
+        setClothingItems(data);
+      })
+      .catch(console.error);
+  }, []);
+
   return (
     <CurrentTemperatureUnitContext.Provider
       value={{ currentTemperatureUnit, handleToggleSwitchChange }}
@@ -92,6 +112,7 @@ function App() {
             <Route
               path="/"
               element={
+                // pass clothing items as a prop
                 <Main
                   weatherData={weatherData}
                   handleCardClick={handleCardClick}
@@ -101,7 +122,13 @@ function App() {
             />
             <Route
               path="/profile"
-              element={<Profile onCardClick={handleCardClick} />}
+              element={
+                <Profile
+                  onCardClick={handleCardClick}
+                  clothingItems={clothingItems}
+                  onClick={handleAddClick}
+                />
+              }
             />
           </Routes>
 
@@ -118,6 +145,7 @@ function App() {
           card={selectedCard}
           handleCloseClick={handleCloseClick}
           handleOverlayClick={handleOverlayClick}
+          onClick={h}
         />
       </div>
     </CurrentTemperatureUnitContext.Provider>
