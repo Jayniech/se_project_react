@@ -6,4 +6,22 @@ function getItems() {
   });
 }
 
-export { getItems };
+function addItems({ name, weather, imageUrl }) {
+  return fetch(`${baseUrl}/items`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      name,
+      weather,
+      imageUrl,
+    }),
+  });
+}
+
+function deleteItems({ _id }) {
+  return fetch(`${baseUrl}/items/${_id}`, {
+    method: "DELETE",
+  });
+}
+
+export { getItems, addItems, deleteItems };

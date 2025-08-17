@@ -6,7 +6,6 @@ export default function ClothingSection({
   clothingItems,
   onClick,
 }) {
-  console.log(clothingItems);
   return (
     <div className="clothing-section">
       <div className="clothing-section__header">

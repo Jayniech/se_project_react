@@ -15,7 +15,8 @@ import {
 import CurrentTemperatureUnitContext from "../../contexts/CurrentTemperatureUnitContext";
 import AddItemModal from "../AddItemModal/AddItemModal";
 import Profile from "../Profile/Profile";
-import { getItems } from "../../utils/api";
+import { getItems, addItems, deleteItems } from "../../utils/api";
+import ConfirmationModal from "../ConfirmationModal/ConfirmationModal";
 
 function App() {
   const [weatherData, setWeatherData] = useState({
@@ -44,6 +45,10 @@ function App() {
     setActiveModal("add-garment");
   };
 
+  const handleDeleteModalClick = () => {
+    setActiveModal("delete");
+  };
+
   const handleCloseClick = () => {
     setActiveModal("");
   };
@@ -55,19 +60,28 @@ function App() {
   };
 
   const handleAddItemModalSubmit = ({ name, imageUrl, weather }) => {
-    setClothingItems((prevItems) => [
-      ...prevItems,
-      { name, imageUrl: imageUrl, weather },
-    ]);
-    handleCloseClick();
+    addItems({ name, weather, imageUrl })
+      .then(() => {
+        setClothingItems((prevItems) => [
+          ...prevItems,
+          { name, imageUrl: imageUrl, weather },
+        ]);
+        handleCloseClick();
+      })
+      .catch(console.error);
   };
 
   const handleDeleteModalSubmit = (_id) => {
-    setClothingItems(
-      clothingItems.filter((item) => {
-        return item._id !== _id;
+    deleteItems({ _id })
+      .then(() => {
+        setClothingItems(
+          clothingItems.filter((item) => {
+            return item._id !== _id;
+          })
+        );
+        handleCloseClick();
       })
-    );
+      .catch(console.error);
   };
 
   useEffect(() => {
@@ -145,7 +159,14 @@ function App() {
           card={selectedCard}
           handleCloseClick={handleCloseClick}
           handleOverlayClick={handleOverlayClick}
-          onClick={h}
+          onClick={handleDeleteModalClick}
+        />
+        <ConfirmationModal
+          onClose={handleCloseClick}
+          isOpen={activeModal === "delete"}
+          onDelete={handleDeleteModalSubmit}
+          selectedCard={selectedCard}
+          onOverlay={handleOverlayClick}
         />
       </div>
     </CurrentTemperatureUnitContext.Provider>

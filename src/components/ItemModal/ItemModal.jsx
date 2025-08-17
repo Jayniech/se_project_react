@@ -28,7 +28,7 @@ function ItemModal({
             type="submit"
             className="modal__delete-btn"
             onClick={onClick}
-          ></button>
+          />
         </div>
       </div>
     </div>

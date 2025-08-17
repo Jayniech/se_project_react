@@ -40,10 +40,12 @@
   font-weight: 700;
   font-size: 20px;
   line-height: 1.2;
+  transition: transform 0.15s linear;
 }
 
 .header__add-clothes-btn:hover {
   cursor: pointer;
+  transform: scale(1.03);
 }
 
 .header__column {
