@@ -1,16 +1,16 @@
-import "./ClothingSection.css";
+import "./ClothesSection.css";
 import ItemCard from "../ItemCard/ItemCard";
 
-export default function ClothingSection({
+export default function ClothesSection({
   onCardClick,
   clothingItems,
   onClick,
 }) {
   return (
-    <div className="clothing-section">
-      <div className="clothing-section__header">
-        <p className="clothing-section__title">Your items</p>
-        <button onClick={onClick} className="clothing-section__button">
+    <div className="clothes-section">
+      <div className="clothes-section__header">
+        <p className="clothes-section__title">Your items</p>
+        <button onClick={onClick} className="clothes-section__button">
           + Add new
         </button>
       </div>
