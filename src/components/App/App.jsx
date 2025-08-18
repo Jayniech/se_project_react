@@ -9,7 +9,7 @@ import Footer from "../Footer/Footer";
 import { getWeather, filterWeatherData } from "../../utils/weatherApi";
 import {
   defaultCoordinates,
-  APIkey,
+  apiKey,
   defaultClothingItems,
 } from "../../utils/constants";
 import CurrentTemperatureUnitContext from "../../contexts/CurrentTemperatureUnitContext";
@@ -31,6 +31,7 @@ function App() {
   const [activeModal, setActiveModal] = useState("");
   const [selectedCard, setSelectedCard] = useState({});
   const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
+  const [reset, setReset] = useState(() => {});
 
   const handleToggleSwitchChange = () => {
     setCurrentTemperatureUnit(currentTemperatureUnit === "F" ? "C" : "F");
@@ -61,22 +62,20 @@ function App() {
 
   const handleAddItemModalSubmit = ({ name, imageUrl, weather }) => {
     addItems({ name, weather, imageUrl })
-      .then(() => {
-        setClothingItems((prevItems) => [
-          ...prevItems,
-          { name, imageUrl: imageUrl, weather },
-        ]);
+      .then((res) => {
+        setClothingItems((prevItems) => [...prevItems, res]);
         handleCloseClick();
+        reset();
       })
       .catch(console.error);
   };
 
-  const handleDeleteModalSubmit = (_id) => {
-    deleteItems({ _id })
+  const handleDeleteModalSubmit = (selectedCard) => {
+    deleteItems({ _id: selectedCard._id })
       .then(() => {
         setClothingItems(
           clothingItems.filter((item) => {
-            return item._id !== _id;
+            return item._id !== selectedCard._id;
           })
         );
         handleCloseClick();
@@ -84,8 +83,12 @@ function App() {
       .catch(console.error);
   };
 
+  const handleResetCall = (reset) => {
+    setReset(() => reset);
+  };
+
   useEffect(() => {
-    getWeather(defaultCoordinates, APIkey)
+    getWeather(defaultCoordinates, apiKey)
       .then((data) => {
         const filteredData = filterWeatherData(data);
         setWeatherData(filteredData);
@@ -153,6 +156,7 @@ function App() {
           onClose={handleCloseClick}
           onOverlay={handleOverlayClick}
           onAddItemModalSubmit={handleAddItemModalSubmit}
+          onResetReady={handleResetCall}
         />
         <ItemModal
           activeModal={activeModal}

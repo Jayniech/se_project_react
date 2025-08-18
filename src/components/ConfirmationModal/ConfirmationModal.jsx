@@ -23,7 +23,7 @@ export default function ConfirmationModal({
           type="submit"
           className="confirm-modal__button confirm-modal__button_type_delete"
           onClick={() => {
-            onDelete(selectedCard._id);
+            onDelete(selectedCard);
           }}
         >
           Yes, delete item

@@ -21,5 +21,10 @@
   background-image: url(../../assets/delete_button.svg);
   height: 13.62px;
   min-width: 98.12px;
+  transition: transform 0.15s linear;
+}
+
+.modal__delete-btn:hover {
   cursor: pointer;
+  transform: scale(1.05);
 }

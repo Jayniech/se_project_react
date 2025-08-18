@@ -15,12 +15,16 @@ function addItems({ name, weather, imageUrl }) {
       weather,
       imageUrl,
     }),
+  }).then((res) => {
+    return res.ok ? res.json() : Promise.reject(`Error: ${res.status}`);
   });
 }
 
 function deleteItems({ _id }) {
   return fetch(`${baseUrl}/items/${_id}`, {
     method: "DELETE",
+  }).then((res) => {
+    return res.ok ? res.json() : Promise.reject(`Error: ${res.status}`);
   });
 }
 
