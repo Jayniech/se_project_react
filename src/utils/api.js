@@ -1,9 +1,7 @@
 const baseUrl = "http://localhost:3001";
 
 function getItems() {
-  return fetch(`${baseUrl}/items`).then((res) => {
-    return checkResponse(res);
-  });
+  return fetch(`${baseUrl}/items`).then(checkResponse);
 }
 
 function checkResponse(res) {
@@ -19,17 +17,13 @@ function addItems({ name, weather, imageUrl }) {
       weather,
       imageUrl,
     }),
-  }).then((res) => {
-    return checkResponse(res);
-  });
+  }).then(checkResponse);
 }
 
 function deleteItems({ _id }) {
   return fetch(`${baseUrl}/items/${_id}`, {
     method: "DELETE",
-  }).then((res) => {
-    return checkResponse(res);
-  });
+  }).then(checkResponse);
 }
 
 export { getItems, addItems, deleteItems, checkResponse };
