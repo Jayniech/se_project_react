@@ -2,8 +2,12 @@ const baseUrl = "http://localhost:3001";
 
 function getItems() {
   return fetch(`${baseUrl}/items`).then((res) => {
-    return res.ok ? res.json() : Promise.reject(`Error: ${res.status}`);
+    return checkResponse(res);
   });
+}
+
+function checkResponse(res) {
+  return res.ok ? res.json() : Promise.reject(`Error: ${res.status}`);
 }
 
 function addItems({ name, weather, imageUrl }) {
@@ -16,7 +20,7 @@ function addItems({ name, weather, imageUrl }) {
       imageUrl,
     }),
   }).then((res) => {
-    return res.ok ? res.json() : Promise.reject(`Error: ${res.status}`);
+    return checkResponse(res);
   });
 }
 
@@ -24,8 +28,8 @@ function deleteItems({ _id }) {
   return fetch(`${baseUrl}/items/${_id}`, {
     method: "DELETE",
   }).then((res) => {
-    return res.ok ? res.json() : Promise.reject(`Error: ${res.status}`);
+    return checkResponse(res);
   });
 }
 
-export { getItems, addItems, deleteItems };
+export { getItems, addItems, deleteItems, checkResponse };
