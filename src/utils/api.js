@@ -1,7 +1,12 @@
 const baseUrl = "http://localhost:3001";
 
 function getItems() {
-  return fetch(`${baseUrl}/items`).then(checkResponse);
+  return fetch(`${baseUrl}/items`)
+    .then(checkResponse)
+    .then((items) => {
+      items.reverse();
+      return items;
+    });
 }
 
 function checkResponse(res) {
