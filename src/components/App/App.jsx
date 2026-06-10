@@ -14,6 +14,7 @@ import Profile from "../Profile/Profile";
 import { getItems, addItems, deleteItems } from "../../utils/api";
 import ConfirmationModal from "../ConfirmationModal/ConfirmationModal";
 import RegisterModal from "../RegisterModal/RegisterModal";
+import LoginModal from "../LoginModal/LoginModal";
 import { registerUser, loginUser } from "../../utils/auth";
 
 function App() {
@@ -31,6 +32,7 @@ function App() {
   const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
   const [resetAdditem, setResetAddItem] = useState(() => {});
   const [resetRegister, setResetRegister] = useState(() => {});
+  const [resetLogin, setResetLogin] = useState(() => {});
 
   const handleToggleSwitchChange = () => {
     setCurrentTemperatureUnit(currentTemperatureUnit === "F" ? "C" : "F");
@@ -50,7 +52,6 @@ function App() {
   };
 
   const handleLoginClick = () => {
-    
     setActiveModal("login");
   };
 
@@ -105,12 +106,26 @@ function App() {
     .catch(console.error);
   };
 
+  const handleLoginModalSubmit = ({email, password }) => {
+    loginUser({ email, password })
+    .then((res) => {
+        localStorage.setItem("jwt", res.token);
+        handleCloseClick();
+        resetLogin();
+    })
+    .catch(console.error);
+  };
+
   const handleResetAddItemCall = (reset) => {
     setResetAddItem(() => reset);
   };
 
   const handleResetRegisterCall = (reset) => {
     setResetRegister(() => reset);
+  };
+
+  const handleResetLoginCall = (reset) => {
+    setResetLogin(() => reset);
   };
 
   useEffect(() => {
@@ -205,6 +220,14 @@ function App() {
           onOverlay={handleOverlayClick}
           onRegisterModalSubmit={handleRegisterModalSubmit}
           onResetReady={handleResetRegisterCall}
+        />
+        <LoginModal
+          isOpen={activeModal === "login"}
+          onClose={handleCloseClick}
+          onSignup={handleSignupClick}
+          onOverlay={handleOverlayClick}
+          onLoginModalSubmit={handleLoginModalSubmit}
+          onResetReady={handleResetLoginCall}
         />
       </div>
     </CurrentTemperatureUnitContext.Provider>
