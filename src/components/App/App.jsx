@@ -13,6 +13,8 @@ import AddItemModal from "../AddItemModal/AddItemModal";
 import Profile from "../Profile/Profile";
 import { getItems, addItems, deleteItems } from "../../utils/api";
 import ConfirmationModal from "../ConfirmationModal/ConfirmationModal";
+import RegisterModal from "../RegisterModal/RegisterModal";
+import { registerUser, loginUser } from "../../utils/auth";
 
 function App() {
   const [weatherData, setWeatherData] = useState({
@@ -27,7 +29,8 @@ function App() {
   const [activeModal, setActiveModal] = useState("");
   const [selectedCard, setSelectedCard] = useState({});
   const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
-  const [reset, setReset] = useState(() => {});
+  const [resetAdditem, setResetAddItem] = useState(() => {});
+  const [resetRegister, setResetRegister] = useState(() => {});
 
   const handleToggleSwitchChange = () => {
     setCurrentTemperatureUnit(currentTemperatureUnit === "F" ? "C" : "F");
@@ -46,6 +49,15 @@ function App() {
     setActiveModal("delete");
   };
 
+  const handleLoginClick = () => {
+    
+    setActiveModal("login");
+  };
+
+  const handleSignupClick = () => {
+    setActiveModal("sign-up")
+  };
+
   const handleCloseClick = () => {
     setActiveModal("");
   };
@@ -61,7 +73,7 @@ function App() {
       .then((res) => {
         setClothingItems((prevItems) => [res, ...prevItems]);
         handleCloseClick();
-        reset();
+        resetAdditem();
       })
       .catch(console.error);
   };
@@ -79,8 +91,26 @@ function App() {
       .catch(console.error);
   };
 
-  const handleResetCall = (reset) => {
-    setReset(() => reset);
+  const handleRegisterModalSubmit = ({email, password, name, avatar }) => {
+    registerUser({ email, password, name, avatar})
+    .then((res) => {
+        loginUser({ email, password })
+        .then((res) => {
+          localStorage.setItem("jwt", res.token);
+          handleCloseClick();
+          resetRegister();
+        })
+        .catch(console.error);
+    })
+    .catch(console.error);
+  };
+
+  const handleResetAddItemCall = (reset) => {
+    setResetAddItem(() => reset);
+  };
+
+  const handleResetRegisterCall = (reset) => {
+    setResetRegister(() => reset);
   };
 
   useEffect(() => {
@@ -152,7 +182,7 @@ function App() {
           onClose={handleCloseClick}
           onOverlay={handleOverlayClick}
           onAddItemModalSubmit={handleAddItemModalSubmit}
-          onResetReady={handleResetCall}
+          onResetReady={handleResetAddItemCall}
         />
         <ItemModal
           activeModal={activeModal}
@@ -167,6 +197,14 @@ function App() {
           onDelete={handleDeleteModalSubmit}
           selectedCard={selectedCard}
           onOverlay={handleOverlayClick}
+        />
+        <RegisterModal
+          isOpen={activeModal === "sign-up"}
+          onClose={handleCloseClick}
+          onLogin={handleLoginClick}
+          onOverlay={handleOverlayClick}
+          onRegisterModalSubmit={handleRegisterModalSubmit}
+          onResetReady={handleResetRegisterCall}
         />
       </div>
     </CurrentTemperatureUnitContext.Provider>
