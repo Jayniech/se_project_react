@@ -1,5 +1,5 @@
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
-import "./RegisterModal.css";
+import "./LoginModal.css";
 import { useEffect, useState } from "react";
 
 export default function LoginModal({
@@ -71,7 +71,7 @@ export default function LoginModal({
           required
         />
       </label>
-      <button onClick={onSignup} type="button" className="modal__login-btn">or Register</button>
+      <button onClick={onSignup} type="button" className="modal__register-btn">or Register</button>
     </ModalWithForm>
   );
 }

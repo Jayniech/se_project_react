@@ -1,0 +1,15 @@
+.modal__register-btn {
+  max-width: 124px;
+  padding: 8px 16px;
+  border: none;
+  color: rgba(0, 0, 0, 0.5);
+  background-color: transparent;
+  border-radius: 4px;
+  opacity: 1;
+  transition: transform 0.15s linear;
+}
+
+.modal__register-btn:hover {
+    cursor: pointer;
+  transform: scale(1.2);
+}
