@@ -9,6 +9,7 @@ import Footer from "../Footer/Footer";
 import { getWeather, filterWeatherData } from "../../utils/weatherApi";
 import { defaultCoordinates, apiKey } from "../../utils/constants";
 import CurrentTemperatureUnitContext from "../../contexts/CurrentTemperatureUnitContext";
+import CurrentUserContext from "../../contexts/CurrentUserContext";
 import AddItemModal from "../AddItemModal/AddItemModal";
 import Profile from "../Profile/Profile";
 import { getItems, addItems, deleteItems } from "../../utils/api";
@@ -33,7 +34,7 @@ function App() {
   const [resetAdditem, setResetAddItem] = useState(() => {});
   const [resetRegister, setResetRegister] = useState(() => {});
   const [resetLogin, setResetLogin] = useState(() => {});
-  const [login, setLogin] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
 
   const handleToggleSwitchChange = () => {
@@ -167,87 +168,86 @@ function App() {
     if(token) {
       checkToken(token)
       .then((data) => {
-        setLogin(true);
+        setIsLoggedIn(true);
         setCurrentUser(data);
       })
     .catch(console.error);
     }
-    
-    
   }, []);
 
   return (
-    <CurrentTemperatureUnitContext.Provider
-      value={{ currentTemperatureUnit, handleToggleSwitchChange }}
-    >
-      <div className="page">
-        <div className="page__content">
-          <Header handleAddClick={handleAddClick} weatherData={weatherData} />
-          <Routes>
-            <Route
-              path="/"
-              element={
-                // pass clothing items as a prop
-                <Main
-                  weatherData={weatherData}
-                  handleCardClick={handleCardClick}
-                  clothingItems={clothingItems}
-                />
-              }
-            />
-            <Route
-              path="/profile"
-              element={
-                <Profile
-                  onCardClick={handleCardClick}
-                  clothingItems={clothingItems}
-                  onClick={handleAddClick}
-                />
-              }
-            />
-          </Routes>
-
-          <Footer />
+    <CurrentUserContext.Provider value={currentUser}>
+      <CurrentTemperatureUnitContext.Provider
+        value={{ currentTemperatureUnit, handleToggleSwitchChange }}
+      >
+        <div className="page">
+          <div className="page__content">
+            <Header handleAddClick={handleAddClick} weatherData={weatherData} />
+            <Routes>
+              <Route
+                path="/"
+                element={
+                  // pass clothing items as a prop
+                  <Main
+                    weatherData={weatherData}
+                    handleCardClick={handleCardClick}
+                    clothingItems={clothingItems}
+                  />
+                }
+              />
+              <Route
+                path="/profile"
+                element={
+                  <Profile
+                    onCardClick={handleCardClick}
+                    clothingItems={clothingItems}
+                    onClick={handleAddClick}
+                  />
+                }
+              />
+            </Routes>
+            <Footer />
+          </div>
+          <AddItemModal
+            isOpen={activeModal === "add-garment"}
+            onClose={handleCloseClick}
+            onOverlay={handleOverlayClick}
+            onAddItemModalSubmit={handleAddItemModalSubmit}
+            onResetReady={handleResetAddItemCall}
+          />
+          <ItemModal
+            activeModal={activeModal}
+            card={selectedCard}
+            handleCloseClick={handleCloseClick}
+            handleOverlayClick={handleOverlayClick}
+            onClick={handleDeleteModalClick}
+          />
+          <ConfirmationModal
+            onClose={handleCloseClick}
+            isOpen={activeModal === "delete"}
+            onDelete={handleDeleteModalSubmit}
+            selectedCard={selectedCard}
+            onOverlay={handleOverlayClick}
+          />
+          <RegisterModal
+            isOpen={activeModal === "sign-up"}
+            onClose={handleCloseClick}
+            onLogin={handleLoginClick}
+            onOverlay={handleOverlayClick}
+            onRegisterModalSubmit={handleRegisterModalSubmit}
+            onResetReady={handleResetRegisterCall}
+          />
+          <LoginModal
+            isOpen={activeModal === "login"}
+            onClose={handleCloseClick}
+            onSignup={handleSignupClick}
+            onOverlay={handleOverlayClick}
+            onLoginModalSubmit={handleLoginModalSubmit}
+            onResetReady={handleResetLoginCall}
+          />
         </div>
-        <AddItemModal
-          isOpen={activeModal === "add-garment"}
-          onClose={handleCloseClick}
-          onOverlay={handleOverlayClick}
-          onAddItemModalSubmit={handleAddItemModalSubmit}
-          onResetReady={handleResetAddItemCall}
-        />
-        <ItemModal
-          activeModal={activeModal}
-          card={selectedCard}
-          handleCloseClick={handleCloseClick}
-          handleOverlayClick={handleOverlayClick}
-          onClick={handleDeleteModalClick}
-        />
-        <ConfirmationModal
-          onClose={handleCloseClick}
-          isOpen={activeModal === "delete"}
-          onDelete={handleDeleteModalSubmit}
-          selectedCard={selectedCard}
-          onOverlay={handleOverlayClick}
-        />
-        <RegisterModal
-          isOpen={activeModal === "sign-up"}
-          onClose={handleCloseClick}
-          onLogin={handleLoginClick}
-          onOverlay={handleOverlayClick}
-          onRegisterModalSubmit={handleRegisterModalSubmit}
-          onResetReady={handleResetRegisterCall}
-        />
-        <LoginModal
-          isOpen={activeModal === "login"}
-          onClose={handleCloseClick}
-          onSignup={handleSignupClick}
-          onOverlay={handleOverlayClick}
-          onLoginModalSubmit={handleLoginModalSubmit}
-          onResetReady={handleResetLoginCall}
-        />
-      </div>
-    </CurrentTemperatureUnitContext.Provider>
+      </CurrentTemperatureUnitContext.Provider>
+    </CurrentUserContext.Provider>
   );
 }
 
