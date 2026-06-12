@@ -17,6 +17,7 @@ import ConfirmationModal from "../ConfirmationModal/ConfirmationModal";
 import RegisterModal from "../RegisterModal/RegisterModal";
 import LoginModal from "../LoginModal/LoginModal";
 import { registerUser, loginUser, checkToken } from "../../utils/auth";
+import ProtectedRoute from "../PrtectedRoute/ProtectedRoute";
 
 function App() {
   const [weatherData, setWeatherData] = useState({
@@ -77,7 +78,8 @@ function App() {
   const handleAddItemModalSubmit = ({ name, imageUrl, weather }) => {
     addItems({ name, weather, imageUrl }, token)
       .then((res) => {
-        setClothingItems((prevItems) => [res, ...prevItems]);
+        console.log(res);
+        setClothingItems((prevItems) => [res.data, ...prevItems]);
         handleCloseClick();
         resetAdditem();
       })
@@ -208,16 +210,18 @@ function App() {
                   />
                 }
               />
-              <Route
-                path="/profile"
-                element={
-                  <Profile
-                    onCardClick={handleCardClick}
-                    clothingItems={clothingItems}
-                    onClick={handleAddClick}
-                  />
-                }
-              />
+                      <Route
+                        path="/profile"
+                        element={
+                          <ProtectedRoute isLoggedIn={isLoggedIn}>
+                          <Profile
+                            onCardClick={handleCardClick}
+                            clothingItems={clothingItems}
+                            onClick={handleAddClick}
+                          />
+                          </ProtectedRoute>
+                        }
+                        />  
             </Routes>
             <Footer />
           </div>
