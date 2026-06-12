@@ -103,6 +103,10 @@ function App() {
         loginUser({ email, password })
         .then((res) => {
           localStorage.setItem("jwt", res.token);
+          setIsLoggedIn(true);
+          checkToken(res.token).then((userData) => {
+            setCurrentUser(userData);
+          })
           handleCloseClick();
           resetRegister();
         })
@@ -115,6 +119,10 @@ function App() {
     loginUser({ email, password })
     .then((res) => {
         localStorage.setItem("jwt", res.token);
+        setIsLoggedIn(true);
+        checkToken(res.token).then((userData) => {
+          setCurrentUser(userData);
+        })
         handleCloseClick();
         resetLogin();
     })

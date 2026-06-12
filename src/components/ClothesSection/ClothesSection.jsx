@@ -21,7 +21,7 @@ export default function ClothesSection({
       </div>
       <ul className="clothes-section__items">
         {clothingItems.filter((item) =>
-          item.owner === currentUser._id
+          item.owner === currentUser?.data?._id
         )
         .map((item) => {
           return (
