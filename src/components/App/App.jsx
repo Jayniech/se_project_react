@@ -16,8 +16,9 @@ import { getItems, addItems, deleteItems } from "../../utils/api";
 import ConfirmationModal from "../ConfirmationModal/ConfirmationModal";
 import RegisterModal from "../RegisterModal/RegisterModal";
 import LoginModal from "../LoginModal/LoginModal";
-import { registerUser, loginUser, checkToken } from "../../utils/auth";
+import { registerUser, loginUser, checkToken, editUser } from "../../utils/auth";
 import ProtectedRoute from "../PrtectedRoute/ProtectedRoute";
+import EditProfileModal from "../EditProfileModal/EditProfileModal"
 
 function App() {
   const [weatherData, setWeatherData] = useState({
@@ -37,6 +38,7 @@ function App() {
   const [resetLogin, setResetLogin] = useState(() => {});
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
+  const [resetEditProfile, setResetEditProfile] = useState({});
 
   const handleToggleSwitchChange = () => {
     setCurrentTemperatureUnit(currentTemperatureUnit === "F" ? "C" : "F");
@@ -124,9 +126,19 @@ function App() {
         setIsLoggedIn(true);
         checkToken(res.token).then((userData) => {
           setCurrentUser(userData);
-        })
+        });
         handleCloseClick();
         resetLogin();
+    })
+    .catch(console.error);
+  };
+
+  const handleEditProfileModalSubmit = ({ name, avatar }) => {
+    editUser({ name, avatar }, token)
+    .then(() => {
+      setCurrentUser(userData);
+      handleCloseClick();
+      resetEditProfile();
     })
     .catch(console.error);
   };
@@ -142,6 +154,10 @@ function App() {
   const handleResetLoginCall = (reset) => {
     setResetLogin(() => reset);
   };
+
+  const handleResetEditProfileCall = (reset) => {
+    setResetEditProfile(() => reset);
+  }
 
   useEffect(() => {
     getWeather(defaultCoordinates, apiKey)
@@ -262,6 +278,13 @@ function App() {
             onLoginModalSubmit={handleLoginModalSubmit}
             onResetReady={handleResetLoginCall}
           />
+          <EditProfileModal 
+          isOpen={activeModal === "edit-profile"}
+          onClose={handleCloseClick}
+          onOverlay={handleOverlayClick}
+          onResetReady={handleResetEditProfileCall}
+          onEditProfileModalSubmit={handleEditProfileModalSubmit}
+          />
         </div>
       </CurrentTemperatureUnitContext.Provider>
     </CurrentUserContext.Provider>
@@ -269,3 +292,11 @@ function App() {
 }
 
 export default App;
+
+// TODOs
+// 1. style login sign up buttons 
+// 2. fix button positions on register and login modals
+// 3. Make and style button to open Edit Profile Modal
+// 4. Make sure user name and avatar reflect properley
+// 5. Make and style log out button
+// 6. comeplete task 4
