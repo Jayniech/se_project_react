@@ -6,8 +6,8 @@ import { Link } from "react-router-dom";
 import { useContext } from "react";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 
-function Header({ 
-  handleAddClick, 
+function Header({
+  handleAddClick,
   weatherData,
   isLoggedIn,
   onLogin,
@@ -41,12 +41,22 @@ function Header({
       </button>
       {isLoggedIn ? (
         <Link to="/profile" className="header__link">
-        <div className="header__user-container">
-          <p className="header__username">{currentUser?.data?.name}</p>
-          {currentUser?.data?.avatar ? (<img src={currentUser?.data?.avatar} alt="User Avatar" className="header__avatar"/>):(<span className="header__avatar-ph">{currentUser?.data?.name?.[0]}</span>)}
-        </div>
-      </Link>
-      ):(
+          <div className="header__user-container">
+            <p className="header__username">{currentUser?.data?.name}</p>
+            {currentUser?.data?.avatar ? (
+              <img
+                src={currentUser?.data?.avatar}
+                alt="User Avatar"
+                className="header__avatar"
+              />
+            ) : (
+              <span className="header__avatar-ph">
+                {currentUser?.data?.name?.[0]}
+              </span>
+            )}
+          </div>
+        </Link>
+      ) : (
         <div>
           <button onClick={onSignup}>Sign Up</button>
           <button onClick={onLogin}>Log In</button>
@@ -55,7 +65,6 @@ function Header({
               2. fix button positions on register and login modals */}
         </div>
       )}
-      
     </header>
   );
 }

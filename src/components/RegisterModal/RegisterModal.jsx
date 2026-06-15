@@ -10,8 +10,8 @@ export default function RegisterModal({
   onRegisterModalSubmit,
   onResetReady,
 }) {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [avatar, setAvatar] = useState("");
 
@@ -109,7 +109,9 @@ export default function RegisterModal({
           required
         />
       </label>
-      <button onClick={onLogin} type="button" className="modal__login-btn">or Log in</button>
+      <button onClick={onLogin} type="button" className="modal__login-btn">
+        or Log in
+      </button>
     </ModalWithForm>
   );
 }

@@ -1,8 +1,48 @@
 .sidebar {
   display: flex;
+  flex-direction: column;
   min-width: 229px;
+}
+
+.sidebar__user-container {
+  display: flex;
   align-items: center;
   gap: 16px;
+  margin-bottom: 24px;
+}
+
+.sidebar__button-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sidebar__edit-profile-btn {
+  border: none;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 1.2;
+  text-align: left;
+  transition: transform 0.15s linear;
+}
+
+.sidebar__edit-profile-btn:hover {
+  cursor: pointer;
+  transform: scale(1.03);
+}
+
+.sidebar__log-out-btn {
+  border: none;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 1.2;
+  text-align: left;
+  transition: transform 0.15s linear;
+}
+
+.sidebar__log-out-btn:hover {
+  cursor: pointer;
+  transform: scale(1.03);
 }
 
 .sidebar__user-name {
@@ -10,6 +50,12 @@
 }
 
 .sidebar__avatar {
+  width: 56px;
+  height: 56px;
+}
+
+.sidebar__avatar-ph {
+  border-radius: 50%;
   width: 56px;
   height: 56px;
 }

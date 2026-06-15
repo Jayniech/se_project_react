@@ -10,8 +10,8 @@ export default function LoginModal({
   onLoginModalSubmit,
   onResetReady,
 }) {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   useEffect(() => {
     onResetReady(handleReset);
@@ -71,7 +71,9 @@ export default function LoginModal({
           required
         />
       </label>
-      <button onClick={onSignup} type="button" className="modal__register-btn">or Register</button>
+      <button onClick={onSignup} type="button" className="modal__register-btn">
+        or Register
+      </button>
     </ModalWithForm>
   );
 }

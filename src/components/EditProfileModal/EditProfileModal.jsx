@@ -7,7 +7,7 @@ export default function RegisterModal({
   onClose,
   onOverlay,
   onResetReady,
-  onEditProfileModalSubmit
+  onEditProfileModalSubmit,
 }) {
   const [name, setName] = useState("");
   const [avatar, setAvatar] = useState("");

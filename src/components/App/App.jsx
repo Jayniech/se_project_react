@@ -16,9 +16,14 @@ import { getItems, addItems, deleteItems } from "../../utils/api";
 import ConfirmationModal from "../ConfirmationModal/ConfirmationModal";
 import RegisterModal from "../RegisterModal/RegisterModal";
 import LoginModal from "../LoginModal/LoginModal";
-import { registerUser, loginUser, checkToken, editUser } from "../../utils/auth";
+import {
+  registerUser,
+  loginUser,
+  checkToken,
+  editUser,
+} from "../../utils/auth";
 import ProtectedRoute from "../PrtectedRoute/ProtectedRoute";
-import EditProfileModal from "../EditProfileModal/EditProfileModal"
+import EditProfileModal from "../EditProfileModal/EditProfileModal";
 
 function App() {
   const [weatherData, setWeatherData] = useState({
@@ -62,7 +67,11 @@ function App() {
   };
 
   const handleSignupClick = () => {
-    setActiveModal("sign-up")
+    setActiveModal("sign-up");
+  };
+
+  const handleEditProfileClick = () => {
+    setActiveModal("edit-profile");
   };
 
   const handleCloseClick = () => {
@@ -101,27 +110,27 @@ function App() {
       .catch(console.error);
   };
 
-  const handleRegisterModalSubmit = ({email, password, name, avatar }) => {
-    registerUser({ email, password, name, avatar})
-    .then((res) => {
+  const handleRegisterModalSubmit = ({ email, password, name, avatar }) => {
+    registerUser({ email, password, name, avatar })
+      .then((res) => {
         loginUser({ email, password })
-        .then((res) => {
-          localStorage.setItem("jwt", res.token);
-          setIsLoggedIn(true);
-          checkToken(res.token).then((userData) => {
-            setCurrentUser(userData);
+          .then((res) => {
+            localStorage.setItem("jwt", res.token);
+            setIsLoggedIn(true);
+            checkToken(res.token).then((userData) => {
+              setCurrentUser(userData);
+            });
+            handleCloseClick();
+            resetRegister();
           })
-          handleCloseClick();
-          resetRegister();
-        })
-        .catch(console.error);
-    })
-    .catch(console.error);
+          .catch(console.error);
+      })
+      .catch(console.error);
   };
 
-  const handleLoginModalSubmit = ({email, password }) => {
+  const handleLoginModalSubmit = ({ email, password }) => {
     loginUser({ email, password })
-    .then((res) => {
+      .then((res) => {
         localStorage.setItem("jwt", res.token);
         setIsLoggedIn(true);
         checkToken(res.token).then((userData) => {
@@ -129,18 +138,23 @@ function App() {
         });
         handleCloseClick();
         resetLogin();
-    })
-    .catch(console.error);
+      })
+      .catch(console.error);
   };
 
   const handleEditProfileModalSubmit = ({ name, avatar }) => {
     editUser({ name, avatar }, token)
-    .then(() => {
-      setCurrentUser(userData);
-      handleCloseClick();
-      resetEditProfile();
-    })
-    .catch(console.error);
+      .then((userData) => {
+        setCurrentUser(userData);
+        handleCloseClick();
+        resetEditProfile();
+      })
+      .catch(console.error);
+  };
+
+  const handleLogOutClick = () => {
+    localStorage.removeItem("jwt");
+    setIsLoggedIn(false);
   };
 
   const handleResetAddItemCall = (reset) => {
@@ -157,7 +171,7 @@ function App() {
 
   const handleResetEditProfileCall = (reset) => {
     setResetEditProfile(() => reset);
-  }
+  };
 
   useEffect(() => {
     getWeather(defaultCoordinates, apiKey)
@@ -191,13 +205,13 @@ function App() {
   }, []);
 
   useEffect(() => {
-    if(token) {
+    if (token) {
       checkToken(token)
-      .then((data) => {
-        setIsLoggedIn(true);
-        setCurrentUser(data);
-      })
-    .catch(console.error);
+        .then((data) => {
+          setIsLoggedIn(true);
+          setCurrentUser(data);
+        })
+        .catch(console.error);
     }
   }, []);
 
@@ -208,11 +222,12 @@ function App() {
       >
         <div className="page">
           <div className="page__content">
-            <Header 
-              handleAddClick={handleAddClick} weatherData={weatherData} 
+            <Header
+              handleAddClick={handleAddClick}
+              weatherData={weatherData}
               isLoggedIn={isLoggedIn}
               onLogin={handleLoginClick}
-              onSignup={handleSignupClick} 
+              onSignup={handleSignupClick}
             />
             <Routes>
               <Route
@@ -226,18 +241,21 @@ function App() {
                   />
                 }
               />
-                      <Route
-                        path="/profile"
-                        element={
-                          <ProtectedRoute isLoggedIn={isLoggedIn}>
-                          <Profile
-                            onCardClick={handleCardClick}
-                            clothingItems={clothingItems}
-                            onClick={handleAddClick}
-                          />
-                          </ProtectedRoute>
-                        }
-                        />  
+              <Route
+                path="/profile"
+                element={
+                  <ProtectedRoute isLoggedIn={isLoggedIn}>
+                    <Profile
+                      isLoggedIn={isLoggedIn}
+                      onEditProfileClick={handleEditProfileClick}
+                      onLogOut={handleLogOutClick}
+                      onCardClick={handleCardClick}
+                      clothingItems={clothingItems}
+                      onClick={handleAddClick}
+                    />
+                  </ProtectedRoute>
+                }
+              />
             </Routes>
             <Footer />
           </div>
@@ -278,12 +296,12 @@ function App() {
             onLoginModalSubmit={handleLoginModalSubmit}
             onResetReady={handleResetLoginCall}
           />
-          <EditProfileModal 
-          isOpen={activeModal === "edit-profile"}
-          onClose={handleCloseClick}
-          onOverlay={handleOverlayClick}
-          onResetReady={handleResetEditProfileCall}
-          onEditProfileModalSubmit={handleEditProfileModalSubmit}
+          <EditProfileModal
+            isOpen={activeModal === "edit-profile"}
+            onClose={handleCloseClick}
+            onOverlay={handleOverlayClick}
+            onResetReady={handleResetEditProfileCall}
+            onEditProfileModalSubmit={handleEditProfileModalSubmit}
           />
         </div>
       </CurrentTemperatureUnitContext.Provider>
@@ -294,9 +312,6 @@ function App() {
 export default App;
 
 // TODOs
-// 1. style login sign up buttons 
+// 1. style login sign up buttons
 // 2. fix button positions on register and login modals
-// 3. Make and style button to open Edit Profile Modal
-// 4. Make sure user name and avatar reflect properley
-// 5. Make and style log out button
 // 6. comeplete task 4
