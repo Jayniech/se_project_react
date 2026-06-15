@@ -22,7 +22,7 @@ import {
   checkToken,
   editUser,
 } from "../../utils/auth";
-import ProtectedRoute from "../PrtectedRoute/ProtectedRoute";
+import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import EditProfileModal from "../EditProfileModal/EditProfileModal";
 
 function App() {

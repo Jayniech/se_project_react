@@ -11,36 +11,31 @@
   gap: 12px;
 }
 
-.header__avatar {
+.header__avatar,
+.header__avatar-ph {
   width: 40px;
   height: 40px;
 }
 
 .header__avatar-ph {
   border-radius: 50%;
-  width: 40px;
-  height: 40px;
 }
 
-.header__username {
-  margin: 0;
-  font-size: 20px;
-  line-height: 1.2;
-  font-weight: 700;
-}
-
-.header__logo {
-  width: 89px;
-  height: 40px;
-}
-
+.header__username,
 .header__date-and-location {
   margin: 0;
-  font-weight: 700;
   font-size: 20px;
   line-height: 1.2;
+  font-weight: 700;
 }
 
+.header__button-container {
+  display: flex;
+  gap: 20px;
+}
+
+.header__sign-up-btn,
+.header__log-in-btn,
 .header__add-clothes-btn {
   border: none;
   font-weight: 700;
@@ -49,9 +44,16 @@
   transition: transform 0.15s linear;
 }
 
+.header__sign-up-btn:hover,
+.header__log-in-btn:hover,
 .header__add-clothes-btn:hover {
   cursor: pointer;
   transform: scale(1.03);
+}
+
+.header__logo {
+  width: 89px;
+  height: 40px;
 }
 
 .header__column {

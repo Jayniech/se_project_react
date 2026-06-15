@@ -32,37 +32,47 @@ function Header({
         </p>
       </div>
       <ToggleSwitch />
-      <button
+      {/* <button
         onClick={handleAddClick}
         type="button"
         className="header__add-clothes-btn"
       >
         + Add clothes
-      </button>
+      </button> */}
       {isLoggedIn ? (
-        <Link to="/profile" className="header__link">
-          <div className="header__user-container">
-            <p className="header__username">{currentUser?.data?.name}</p>
-            {currentUser?.data?.avatar ? (
-              <img
-                src={currentUser?.data?.avatar}
-                alt="User Avatar"
-                className="header__avatar"
-              />
-            ) : (
-              <span className="header__avatar-ph">
-                {currentUser?.data?.name?.[0]}
-              </span>
-            )}
-          </div>
-        </Link>
+        <>
+          <button
+            onClick={handleAddClick}
+            type="button"
+            className="header__add-clothes-btn"
+          >
+            + Add clothes
+          </button>
+          <Link to="/profile" className="header__link">
+            <div className="header__user-container">
+              <p className="header__username">{currentUser?.data?.name}</p>
+              {currentUser?.data?.avatar ? (
+                <img
+                  src={currentUser?.data?.avatar}
+                  alt="User Avatar"
+                  className="header__avatar"
+                />
+              ) : (
+                <span className="header__avatar-ph">
+                  {currentUser?.data?.name?.[0]}
+                </span>
+              )}
+            </div>
+          </Link>
+        </>
       ) : (
-        <div>
-          <button onClick={onSignup}>Sign Up</button>
-          <button onClick={onLogin}>Log In</button>
-          {/* TODO - 
-              1. style login sign up buttons 
-              2. fix button positions on register and login modals */}
+        <div className="header__button-container">
+          <button onClick={onSignup} className="header__sign-up-btn">
+            Sign Up
+          </button>
+          <button onClick={onLogin} className="header__log-in-btn">
+            Log In
+          </button>
         </div>
       )}
     </header>
