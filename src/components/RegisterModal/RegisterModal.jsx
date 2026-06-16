@@ -53,9 +53,11 @@ export default function RegisterModal({
       title="Sign-up"
       isOpen={isOpen}
       onClose={onClose}
-      onLogin={onLogin}
       onOverlay={onOverlay}
       onSubmit={handleSubmit}
+      extraButtonText="or Log In"
+      extraButtonOnClick={onLogin}
+      extraButtonClassName="modal__login-btn"
     >
       <label htmlFor="user-email-input" className="modal__label">
         Email
@@ -109,9 +111,6 @@ export default function RegisterModal({
           required
         />
       </label>
-      <button onClick={onLogin} type="button" className="modal__login-btn">
-        or Log in
-      </button>
     </ModalWithForm>
   );
 }

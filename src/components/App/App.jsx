@@ -312,6 +312,4 @@ function App() {
 export default App;
 
 // TODOs
-// 1. style login sign up buttons
-// 2. fix button positions on register and login modals
 // 6. comeplete task 4

@@ -8,6 +8,9 @@ function ModalWithForm({
   onClose,
   onOverlay,
   onSubmit,
+  extraButtonText,
+  extraButtonOnClick,
+  extraButtonClassName
 }) {
   return (
     <div
@@ -26,6 +29,7 @@ function ModalWithForm({
           <button type="submit" className="modal__submit-btn">
             {buttonText}
           </button>
+          <button type="button" className={extraButtonClassName} onClick={extraButtonOnClick}>{extraButtonText}</button>
         </form>
       </div>
     </div>

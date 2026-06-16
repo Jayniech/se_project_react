@@ -32,13 +32,6 @@ function Header({
         </p>
       </div>
       <ToggleSwitch />
-      {/* <button
-        onClick={handleAddClick}
-        type="button"
-        className="header__add-clothes-btn"
-      >
-        + Add clothes
-      </button> */}
       {isLoggedIn ? (
         <>
           <button
