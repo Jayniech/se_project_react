@@ -25,6 +25,8 @@ export default function LoginModal({
     setPassword(e.target.value);
   };
 
+  const checkValid = () => email.length >= 1 && password.length >= 1;
+
   const handleSubmit = (e) => {
     e.preventDefault();
     onLoginModalSubmit({ email, password });
@@ -43,6 +45,7 @@ export default function LoginModal({
       onClose={onClose}
       onOverlay={onOverlay}
       onSubmit={handleSubmit}
+      isValid={checkValid()}
       extraButtonText="or Register"
       extraButtonOnClick={onSignup}
       extraButtonClassName="modal__register-btn"

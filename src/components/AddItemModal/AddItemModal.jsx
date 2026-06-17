@@ -28,6 +28,9 @@ export default function AddItemModal({
     setWeather(e.target.value);
   };
 
+  const checkValid = () =>
+    name.length >= 1 && imageUrl.length >= 1 && weather.length >= 1;
+
   const handleSubmit = (e) => {
     e.preventDefault();
     onAddItemModalSubmit({ name, imageUrl, weather });
@@ -46,6 +49,7 @@ export default function AddItemModal({
       isOpen={isOpen}
       onClose={onClose}
       onOverlay={onOverlay}
+      isValid={checkValid()}
       onSubmit={handleSubmit}
     >
       <label htmlFor="garment-name-input" className="modal__label">

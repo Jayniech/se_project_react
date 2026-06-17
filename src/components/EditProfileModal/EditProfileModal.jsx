@@ -1,7 +1,7 @@
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import { useEffect, useState } from "react";
 
-export default function RegisterModal({
+export default function EditProfileModal({
   isOpen,
   onClose,
   onOverlay,
@@ -23,6 +23,8 @@ export default function RegisterModal({
     setAvatar(e.target.value);
   };
 
+  const checkValid = () => name.length >= 1 && avatar.length >= 1;
+
   const handleSubmit = (e) => {
     e.preventDefault();
     onEditProfileModalSubmit({ name, avatar });
@@ -40,6 +42,7 @@ export default function RegisterModal({
       isOpen={isOpen}
       onClose={onClose}
       onOverlay={onOverlay}
+      isValid={checkValid()}
       onSubmit={handleSubmit}
     >
       <label htmlFor="user-name-input" className="modal__label">

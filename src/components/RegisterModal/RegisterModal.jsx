@@ -35,6 +35,12 @@ export default function RegisterModal({
     setAvatar(e.target.value);
   };
 
+  const checkValid = () =>
+    email.length >= 1 &&
+    password.length >= 1 &&
+    name.length >= 1 &&
+    avatar.length >= 1;
+
   const handleSubmit = (e) => {
     e.preventDefault();
     onRegisterModalSubmit({ email, password, name, avatar });
@@ -54,6 +60,7 @@ export default function RegisterModal({
       isOpen={isOpen}
       onClose={onClose}
       onOverlay={onOverlay}
+      isValid={checkValid()}
       onSubmit={handleSubmit}
       extraButtonText="or Log In"
       extraButtonOnClick={onLogin}

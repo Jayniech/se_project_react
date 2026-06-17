@@ -10,7 +10,8 @@ function ModalWithForm({
   onSubmit,
   extraButtonText,
   extraButtonOnClick,
-  extraButtonClassName
+  extraButtonClassName,
+  isValid,
 }) {
   return (
     <div
@@ -26,10 +27,24 @@ function ModalWithForm({
           className="modal__form"
         >
           {children}
-          <button type="submit" className="modal__submit-btn">
-            {buttonText}
-          </button>
-          <button type="button" className={extraButtonClassName} onClick={extraButtonOnClick}>{extraButtonText}</button>
+          <div className="modal__button-container">
+            <button
+              type="submit"
+              className="modal__submit-btn"
+              disabled={!isValid}
+            >
+              {buttonText}
+            </button>
+            {extraButtonText && (
+              <button
+                type="button"
+                className={extraButtonClassName}
+                onClick={extraButtonOnClick}
+              >
+                {extraButtonText}
+              </button>
+            )}
+          </div>
         </form>
       </div>
     </div>

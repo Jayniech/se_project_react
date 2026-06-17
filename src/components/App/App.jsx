@@ -45,6 +45,8 @@ function App() {
   const [currentUser, setCurrentUser] = useState({});
   const [resetEditProfile, setResetEditProfile] = useState({});
 
+  const token = localStorage.getItem("jwt");
+
   const handleToggleSwitchChange = () => {
     setCurrentTemperatureUnit(currentTemperatureUnit === "F" ? "C" : "F");
   };
@@ -83,8 +85,6 @@ function App() {
       handleCloseClick();
     }
   };
-
-  const token = localStorage.getItem("jwt");
 
   const handleAddItemModalSubmit = ({ name, imageUrl, weather }) => {
     addItems({ name, weather, imageUrl }, token)
@@ -312,4 +312,5 @@ function App() {
 export default App;
 
 // TODOs
-// 6. comeplete task 4
+// 1. comeplete task 4
+// 3. Render Email or password incorrect message
