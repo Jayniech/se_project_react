@@ -13,3 +13,8 @@
   cursor: pointer;
   transform: scale(1.2);
 }
+
+.modal__error-msg {
+  color: #FF4D00;
+  margin: 0 0 8px;
+}

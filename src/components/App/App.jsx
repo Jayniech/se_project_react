@@ -44,6 +44,7 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
   const [resetEditProfile, setResetEditProfile] = useState({});
+  const [displayError, setDisplayError] = useState("");
 
   const token = localStorage.getItem("jwt");
 
@@ -138,8 +139,11 @@ function App() {
         });
         handleCloseClick();
         resetLogin();
+        setDisplayError("");
       })
-      .catch(console.error);
+      .catch((err) => {
+        setDisplayError(err.message)
+      });
   };
 
   const handleEditProfileModalSubmit = ({ name, avatar }) => {
@@ -295,6 +299,7 @@ function App() {
             onOverlay={handleOverlayClick}
             onLoginModalSubmit={handleLoginModalSubmit}
             onResetReady={handleResetLoginCall}
+            displayError={displayError}
           />
           <EditProfileModal
             isOpen={activeModal === "edit-profile"}

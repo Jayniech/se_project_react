@@ -9,6 +9,7 @@ export default function LoginModal({
   onOverlay,
   onLoginModalSubmit,
   onResetReady,
+  displayError,
 }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -76,6 +77,7 @@ export default function LoginModal({
           required
         />
       </label>
+      {displayError ? <p className="modal__error-msg">{displayError}</p>:""}
     </ModalWithForm>
   );
 }
