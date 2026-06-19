@@ -12,7 +12,7 @@ import CurrentTemperatureUnitContext from "../../contexts/CurrentTemperatureUnit
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 import AddItemModal from "../AddItemModal/AddItemModal";
 import Profile from "../Profile/Profile";
-import { getItems, addItems, deleteItems } from "../../utils/api";
+import { getItems, addItems, deleteItems, addCardLike, removeCardLike } from "../../utils/api";
 import ConfirmationModal from "../ConfirmationModal/ConfirmationModal";
 import RegisterModal from "../RegisterModal/RegisterModal";
 import LoginModal from "../LoginModal/LoginModal";
@@ -86,6 +86,33 @@ function App() {
       handleCloseClick();
     }
   };
+
+  const handleCardLike = ({ _id, isLiked }) => {
+  // Check if this card is not currently liked
+  !isLiked
+    ? // if so, send a request to add the user's id to the card's likes array
+      
+        // the first argument is the card's id
+        addCardLike({_id}, token)
+        .then((updatedCard) => {
+          console.log(updatedCard)
+          setClothingItems((cards) =>
+            cards.map((item) => (item._id === _id ? updatedCard.data : item))
+        );
+        console.log(updatedCard.data);
+        })
+        .catch((err) => console.log(err))
+    : // if not, send a request to remove the user's id from the card's likes array
+      
+        // the first argument is the card's id
+        removeCardLike({_id}, token) 
+        .then((updatedCard) => {
+          setClothingItems((cards) =>
+            cards.map((item) => (item._id === _id ? updatedCard.data : item))
+          );
+        })
+        .catch((err) => console.log(err));
+};
 
   const handleAddItemModalSubmit = ({ name, imageUrl, weather }) => {
     addItems({ name, weather, imageUrl }, token)
@@ -213,7 +240,7 @@ function App() {
       checkToken(token)
         .then((data) => {
           setIsLoggedIn(true);
-          setCurrentUser(data);
+          setCurrentUser(data.data);
         })
         .catch(console.error);
     }
@@ -242,6 +269,8 @@ function App() {
                     weatherData={weatherData}
                     handleCardClick={handleCardClick}
                     clothingItems={clothingItems}
+                    onCardLike={handleCardLike}
+                    isLoggedIn={isLoggedIn}
                   />
                 }
               />
@@ -315,7 +344,3 @@ function App() {
 }
 
 export default App;
-
-// TODOs
-// 1. comeplete task 4
-// 3. Render Email or password incorrect message

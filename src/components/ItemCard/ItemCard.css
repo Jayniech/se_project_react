@@ -26,3 +26,38 @@
   padding: 2px 12px;
   border-radius: 4px;
 }
+
+.card__image-btn {
+  position: absolute;
+  width: 18px;
+  height: 15px;
+  top: 15px;
+  right: 15px;
+  border: none;
+  background: transparent;
+  background-size: contain;
+  background-repeat: no-repeat;
+  transition: transform 0.15s linear;
+}
+
+.card__image-btn:hover {
+  transform: scale(1.2);
+}
+
+.card__image-btn--liked {
+  position: absolute;
+  width: 18px;
+  height: 15px;
+  top: 15px;
+  right: 15px;
+  border: none;
+  background: transparent;
+  background-size: contain;
+  background-repeat: no-repeat;
+  transition: transform 0.15s linear;
+}
+
+.card__image-btn--liked:hover {
+  transform: scale(1.2);
+}
+

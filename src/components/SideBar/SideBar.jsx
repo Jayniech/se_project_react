@@ -1,5 +1,4 @@
 import "./SideBar.css";
-import defaultAvatar from "../../assets/user_avatar.svg";
 import { useContext } from "react";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 
@@ -9,15 +8,15 @@ export default function SideBar({ onEditProfileClick, onLogOut, isLoggedIn }) {
   return (
     <div className="sidebar">
       <div className="sidebar__user-container">
-        {currentUser?.data?.avatar ? (
+        {currentUser?.avatar ? (
           <img
-            src={currentUser?.data?.avatar}
+            src={currentUser?.avatar}
             alt="User Avatar"
             className="sidebar__avatar"
           />
         ) : (
           <span className="sidebar__avatar-ph">
-            {currentUser?.data?.name?.[0]}
+            {currentUser?.name?.[0]}
           </span>
         )}
         <p className="sidebar__user-name">{currentUser?.data?.name}</p>

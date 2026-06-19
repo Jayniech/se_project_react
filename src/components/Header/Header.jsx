@@ -1,6 +1,5 @@
 import "./Header.css";
 import headerLogo from "../../assets/header_logo.svg";
-import avatar from "../../assets/user_avatar.svg";
 import ToggleSwitch from "../ToggleSwitch/ToggleSwitch";
 import { Link } from "react-router-dom";
 import { useContext } from "react";
@@ -43,16 +42,16 @@ function Header({
           </button>
           <Link to="/profile" className="header__link">
             <div className="header__user-container">
-              <p className="header__username">{currentUser?.data?.name}</p>
-              {currentUser?.data?.avatar ? (
+              <p className="header__username">{currentUser?.name}</p>
+              {currentUser?.avatar ? (
                 <img
-                  src={currentUser?.data?.avatar}
+                  src={currentUser?.avatar}
                   alt="User Avatar"
                   className="header__avatar"
                 />
               ) : (
                 <span className="header__avatar-ph">
-                  {currentUser?.data?.name?.[0]}
+                  {currentUser?.name?.[0]}
                 </span>
               )}
             </div>
