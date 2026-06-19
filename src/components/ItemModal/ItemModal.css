@@ -28,3 +28,7 @@
   cursor: pointer;
   transform: scale(1.05);
 }
+
+.modal__delete-btn_hidden {
+  visibility: hidden;
+}

@@ -15,8 +15,6 @@ function ItemCard({ item, onCardClick, onCardLike, isLoggedIn }) {
     onCardLike({_id, isLiked});
   };
 
-  console.log("likes array:", item.likes);
-console.log("currentUser._id:", currentUser._id);
   const isLiked = item.likes.some(id => id === currentUser._id);
 
   const itemLikeButtonClassName = isLiked ? (`card__image-btn--liked`):(`card__image-btn`);

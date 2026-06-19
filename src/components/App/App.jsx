@@ -36,13 +36,13 @@ function App() {
 
   const [clothingItems, setClothingItems] = useState([]);
   const [activeModal, setActiveModal] = useState("");
-  const [selectedCard, setSelectedCard] = useState({});
+  const [selectedCard, setSelectedCard] = useState(null);
   const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
   const [resetAdditem, setResetAddItem] = useState(() => {});
   const [resetRegister, setResetRegister] = useState(() => {});
   const [resetLogin, setResetLogin] = useState(() => {});
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [currentUser, setCurrentUser] = useState({});
+  const [currentUser, setCurrentUser] = useState(null);
   const [resetEditProfile, setResetEditProfile] = useState({});
   const [displayError, setDisplayError] = useState("");
 
@@ -299,13 +299,13 @@ function App() {
             onAddItemModalSubmit={handleAddItemModalSubmit}
             onResetReady={handleResetAddItemCall}
           />
-          <ItemModal
+          {selectedCard && <ItemModal
             activeModal={activeModal}
             card={selectedCard}
             handleCloseClick={handleCloseClick}
             handleOverlayClick={handleOverlayClick}
             onClick={handleDeleteModalClick}
-          />
+          />}
           <ConfirmationModal
             onClose={handleCloseClick}
             isOpen={activeModal === "delete"}
