@@ -16,9 +16,9 @@ Want to dress comfortably and appropriately for the weather? The What to Wear Ap
 
 **Links**
 
-- [Link to Project](https://jayniech.github.io/se_project_react/)
+- [Link to Backend](https://github.com/Jayniech/se_project_express)
 
-- [Figma Design](https://www.figma.com/file/DTojSwldenF9UPKQZd6RRb/Sprint-10%3A-WTWR)
+- [Figma Design](https://www.figma.com/file/bfVOvqlLmoKZ5lpro8WWBe/Sprint-14_-WTWR?t=3hvVWRz9LUFsxyNn-6)
 
 **Project Description**
 
