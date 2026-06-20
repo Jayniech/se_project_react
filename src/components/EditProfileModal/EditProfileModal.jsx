@@ -1,5 +1,7 @@
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import { useEffect, useState } from "react";
+import { useContext } from "react";
+import CurrentUserContext from "../../contexts/CurrentUserContext";
 
 export default function EditProfileModal({
   isOpen,
@@ -7,13 +9,19 @@ export default function EditProfileModal({
   onOverlay,
   onResetReady,
   onEditProfileModalSubmit,
+  formId,
 }) {
+  const currentUser = useContext(CurrentUserContext);
+
   const [name, setName] = useState("");
   const [avatar, setAvatar] = useState("");
 
   useEffect(() => {
-    onResetReady(handleReset);
-  }, []);
+  if (isOpen && currentUser) {
+    setName(currentUser.name);
+    setAvatar(currentUser.avatar);
+  }
+}, [isOpen, currentUser]);
 
   const handleNameChange = (e) => {
     setName(e.target.value);
@@ -30,13 +38,9 @@ export default function EditProfileModal({
     onEditProfileModalSubmit({ name, avatar });
   };
 
-  const handleReset = () => {
-    setName("");
-    setAvatar("");
-  };
-
   return (
     <ModalWithForm
+      formId={formId}
       buttonText="Save changes"
       title="Change profile data"
       isOpen={isOpen}
@@ -45,10 +49,10 @@ export default function EditProfileModal({
       isValid={checkValid()}
       onSubmit={handleSubmit}
     >
-      <label htmlFor="user-name-input" className="modal__label">
+      <label htmlFor="edit-name-input" className="modal__label">
         Name
         <input
-          id="user-name-input"
+          id="edit-name-input"
           type="text"
           className="modal__input"
           name="name"
@@ -58,10 +62,10 @@ export default function EditProfileModal({
           required
         />
       </label>
-      <label htmlFor="avatar-imageURL" className="modal__label">
+      <label htmlFor="edit-avatar-imageURL" className="modal__label">
         Avatar
         <input
-          id="avatar-imageURL"
+          id="edit-avatar-imageURL"
           type="url"
           className="modal__input"
           name="link"

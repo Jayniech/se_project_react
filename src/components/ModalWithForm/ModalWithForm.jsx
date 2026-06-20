@@ -12,6 +12,7 @@ function ModalWithForm({
   extraButtonOnClick,
   extraButtonClassName,
   isValid,
+  formId
 }) {
   return (
     <div
@@ -23,7 +24,7 @@ function ModalWithForm({
         <p className="modal__title">{title}</p>
         <form
           onSubmit={onSubmit}
-          id="add-garment-modal"
+          id={formId}
           className="modal__form"
         >
           {children}

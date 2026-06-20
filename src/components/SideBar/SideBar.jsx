@@ -2,7 +2,7 @@ import "./SideBar.css";
 import { useContext } from "react";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 
-export default function SideBar({ onEditProfileClick, onLogOut, isLoggedIn }) {
+export default function SideBar({ onEditProfileClick, onLogOut }) {
   const currentUser = useContext(CurrentUserContext);
 
   return (
@@ -17,7 +17,7 @@ export default function SideBar({ onEditProfileClick, onLogOut, isLoggedIn }) {
         ) : (
           <span className="sidebar__avatar-ph">{currentUser?.name?.[0]}</span>
         )}
-        <p className="sidebar__user-name">{currentUser?.data?.name}</p>
+        <p className="sidebar__user-name">{currentUser?.name}</p>
       </div>
       <div className="sidebar__button-container">
         <button

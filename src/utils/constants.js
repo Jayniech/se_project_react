@@ -32,10 +32,10 @@ export const weatherOptions = {
   },
   thunderstorm: {
     day: {
-      url: new URL("../assets/day_thunderstorm.svg", import.meta.url).href,
+      url: new URL("../assets/day_thunder-storm.svg", import.meta.url).href,
     },
     night: {
-      url: new URL("../assets/night_thunderstorm.svg", import.meta.url).href,
+      url: new URL("../assets/night_thunder-storm.svg", import.meta.url).href,
     },
   },
   snow: {

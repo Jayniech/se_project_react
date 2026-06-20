@@ -10,6 +10,7 @@ export default function LoginModal({
   onLoginModalSubmit,
   onResetReady,
   displayError,
+  formId,
 }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -40,6 +41,7 @@ export default function LoginModal({
 
   return (
     <ModalWithForm
+      formId={formId}
       buttonText="Log in"
       title="Log in"
       isOpen={isOpen}
@@ -51,10 +53,10 @@ export default function LoginModal({
       extraButtonOnClick={onSignup}
       extraButtonClassName="modal__register-btn"
     >
-      <label htmlFor="user-email-input" className="modal__label">
+      <label htmlFor="login-email-input" className="modal__label">
         Email
         <input
-          id="user-email-input"
+          id="login-email-input"
           type="email"
           className="modal__input"
           name="email"
@@ -64,10 +66,10 @@ export default function LoginModal({
           required
         />
       </label>
-      <label htmlFor="user-password-input" className="modal__label">
+      <label htmlFor="login-password-input" className="modal__label">
         Password
         <input
-          id="user-password-input"
+          id="login-password-input"
           type="password"
           className="modal__input"
           name="password"

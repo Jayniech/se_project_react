@@ -44,12 +44,11 @@ function App() {
   const [activeModal, setActiveModal] = useState("");
   const [selectedCard, setSelectedCard] = useState(null);
   const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
-  const [resetAdditem, setResetAddItem] = useState(() => {});
+  const [resetAddItem, setResetAddItem] = useState(() => {});
   const [resetRegister, setResetRegister] = useState(() => {});
   const [resetLogin, setResetLogin] = useState(() => {});
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
-  const [resetEditProfile, setResetEditProfile] = useState({});
   const [displayError, setDisplayError] = useState("");
 
   const token = localStorage.getItem("jwt");
@@ -118,7 +117,7 @@ function App() {
       .then((res) => {
         setClothingItems((prevItems) => [res.data, ...prevItems]);
         handleCloseClick();
-        resetAdditem();
+        resetAddItem();
       })
       .catch(console.error);
   };
@@ -176,7 +175,6 @@ function App() {
       .then((userData) => {
         setCurrentUser(userData.data);
         handleCloseClick();
-        resetEditProfile();
       })
       .catch(console.error);
   };
@@ -199,19 +197,17 @@ function App() {
     setResetLogin(() => reset);
   };
 
-  const handleResetEditProfileCall = (reset) => {
-    setResetEditProfile(() => reset);
-  };
+  useEffect(() => {
+  getWeather(defaultCoordinates, apiKey)
+    .then((data) => {
+      const filteredData = filterWeatherData(data);
+      setWeatherData(filteredData);
+    })
+    .catch(console.error);
+  }, []); // ← empty array = runs only on mount
 
   useEffect(() => {
-    getWeather(defaultCoordinates, apiKey)
-      .then((data) => {
-        const filteredData = filterWeatherData(data);
-        setWeatherData(filteredData);
-      })
-      .catch(console.error);
-
-    if (!activeModal) return;
+  if (!activeModal) return;
 
     const handleEscClose = (e) => {
       if (e.key === "Escape") {
@@ -224,7 +220,7 @@ function App() {
     return () => {
       document.removeEventListener("keydown", handleEscClose);
     };
-  }, [activeModal]);
+  }, [activeModal]); // ← runs when modal changes
 
   useEffect(() => {
     getItems()
@@ -291,6 +287,7 @@ function App() {
             <Footer />
           </div>
           <AddItemModal
+            formId="add-garment"
             isOpen={activeModal === "add-garment"}
             onClose={handleCloseClick}
             onOverlay={handleOverlayClick}
@@ -314,6 +311,7 @@ function App() {
             onOverlay={handleOverlayClick}
           />
           <RegisterModal
+            formId="sign-up"
             isOpen={activeModal === "sign-up"}
             onClose={handleCloseClick}
             onLogin={handleLoginClick}
@@ -322,6 +320,7 @@ function App() {
             onResetReady={handleResetRegisterCall}
           />
           <LoginModal
+            formId="login"
             isOpen={activeModal === "login"}
             onClose={handleCloseClick}
             onSignup={handleSignupClick}
@@ -331,10 +330,10 @@ function App() {
             displayError={displayError}
           />
           <EditProfileModal
+            formId="edit-profile"
             isOpen={activeModal === "edit-profile"}
             onClose={handleCloseClick}
             onOverlay={handleOverlayClick}
-            onResetReady={handleResetEditProfileCall}
             onEditProfileModalSubmit={handleEditProfileModalSubmit}
           />
         </div>

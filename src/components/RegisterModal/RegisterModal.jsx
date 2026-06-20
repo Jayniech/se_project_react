@@ -9,6 +9,7 @@ export default function RegisterModal({
   onOverlay,
   onRegisterModalSubmit,
   onResetReady,
+  formId,
 }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -55,6 +56,7 @@ export default function RegisterModal({
 
   return (
     <ModalWithForm
+    formId={formId}
       buttonText="Next"
       title="Sign-up"
       isOpen={isOpen}
@@ -66,10 +68,10 @@ export default function RegisterModal({
       extraButtonOnClick={onLogin}
       extraButtonClassName="modal__login-btn"
     >
-      <label htmlFor="user-email-input" className="modal__label">
+      <label htmlFor="register-email-input" className="modal__label">
         Email
         <input
-          id="user-email-input"
+          id="register-email-input"
           type="email"
           className="modal__input"
           name="email"
@@ -79,10 +81,10 @@ export default function RegisterModal({
           required
         />
       </label>
-      <label htmlFor="user-password-input" className="modal__label">
+      <label htmlFor="register-password-input" className="modal__label">
         Password
         <input
-          id="user-password-input"
+          id="register-password-input"
           type="password"
           className="modal__input"
           name="password"
@@ -92,10 +94,10 @@ export default function RegisterModal({
           required
         />
       </label>
-      <label htmlFor="user-name-input" className="modal__label">
+      <label htmlFor="register-name-input" className="modal__label">
         Name
         <input
-          id="user-name-input"
+          id="register-name-input"
           type="text"
           className="modal__input"
           name="name"
@@ -105,10 +107,10 @@ export default function RegisterModal({
           required
         />
       </label>
-      <label htmlFor="avatar-imageURL" className="modal__label">
+      <label htmlFor="register-avatar-imageURL" className="modal__label">
         Avatar
         <input
-          id="avatar-imageURL"
+          id="register-avatar-imageURL"
           type="url"
           className="modal__input"
           name="link"

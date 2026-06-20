@@ -7,7 +7,6 @@ export default function Profile({
   clothingItems,
   onClick,
   onEditProfileClick,
-  isLoggedIn,
   onLogOut,
 }) {
   return (
@@ -15,7 +14,6 @@ export default function Profile({
       <section className="profile__sidebar">
         <SideBar
           onEditProfileClick={onEditProfileClick}
-          isLoggedIn={isLoggedIn}
           onLogOut={onLogOut}
         />
       </section>

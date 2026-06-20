@@ -7,6 +7,7 @@ export default function AddItemModal({
   onOverlay,
   onAddItemModalSubmit,
   onResetReady,
+  formId,
 }) {
   const [name, setName] = useState("");
   const [imageUrl, setImageUrl] = useState("");
@@ -44,6 +45,7 @@ export default function AddItemModal({
 
   return (
     <ModalWithForm
+    formId={formId}
       buttonText="Add garment"
       title="New garment"
       isOpen={isOpen}
@@ -65,10 +67,10 @@ export default function AddItemModal({
           required
         />
       </label>
-      <label htmlFor="imageURL" className="modal__label">
+      <label htmlFor="garment-imageURL" className="modal__label">
         Image
         <input
-          id="imageURL"
+          id="garment-imageURL"
           type="url"
           className="modal__input"
           name="link"
@@ -81,14 +83,14 @@ export default function AddItemModal({
       <fieldset className="modal__radio-btns">
         <legend className="modal__radio-title">Select weather type:</legend>
         <label
-          htmlFor="hot"
+          htmlFor="garment-hot"
           className={`modal__radio-label ${
             weather === "hot" ? "modal__radio-label_active" : ""
           }`}
         >
           <input
             type="radio"
-            id="hot"
+            id="garment-hot"
             name="weather"
             value="hot"
             checked={weather === "hot"}
@@ -98,14 +100,14 @@ export default function AddItemModal({
           Hot
         </label>
         <label
-          htmlFor="warm"
+          htmlFor="garment-warm"
           className={`modal__radio-label ${
             weather === "warm" ? "modal__radio-label_active" : ""
           }`}
         >
           <input
             type="radio"
-            id="warm"
+            id="garment-warm"
             name="weather"
             value="warm"
             className="modal__radio-input"
@@ -116,14 +118,14 @@ export default function AddItemModal({
           Warm
         </label>
         <label
-          htmlFor="cold"
+          htmlFor="garment-cold"
           className={`modal__radio-label ${
             weather === "cold" ? "modal__radio-label_active" : ""
           }`}
         >
           <input
             type="radio"
-            id="cold"
+            id="garment-cold"
             name="weather"
             value="cold"
             className="modal__radio-input"
