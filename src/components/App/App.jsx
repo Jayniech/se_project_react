@@ -161,7 +161,6 @@ function App() {
         setCurrentUser(userData.data);
         handleCloseClick();
         resetLogin();
-        setDisplayError("");
       })
       .catch((err) => {
         setDisplayError(err.message)
