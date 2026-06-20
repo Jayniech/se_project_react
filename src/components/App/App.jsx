@@ -79,6 +79,7 @@ function App() {
 
   const handleCloseClick = () => {
     setActiveModal("");
+    setDisplayError("");
   };
 
   const handleOverlayClick = (event) => {
@@ -88,23 +89,16 @@ function App() {
   };
 
   const handleCardLike = ({ _id, isLiked }) => {
-  // Check if this card is not currently liked
   !isLiked
-    ? // if so, send a request to add the user's id to the card's likes array
-      
-        // the first argument is the card's id
+    ? 
         addCardLike({_id}, token)
         .then((updatedCard) => {
-          console.log(updatedCard)
           setClothingItems((cards) =>
             cards.map((item) => (item._id === _id ? updatedCard.data : item))
-        );
-        console.log(updatedCard.data);
+          );
         })
         .catch((err) => console.log(err))
-    : // if not, send a request to remove the user's id from the card's likes array
-      
-        // the first argument is the card's id
+    :    
         removeCardLike({_id}, token) 
         .then((updatedCard) => {
           setClothingItems((cards) =>
@@ -117,7 +111,6 @@ function App() {
   const handleAddItemModalSubmit = ({ name, imageUrl, weather }) => {
     addItems({ name, weather, imageUrl }, token)
       .then((res) => {
-        console.log(res);
         setClothingItems((prevItems) => [res.data, ...prevItems]);
         handleCloseClick();
         resetAdditem();
@@ -141,17 +134,17 @@ function App() {
   const handleRegisterModalSubmit = ({ email, password, name, avatar }) => {
     registerUser({ email, password, name, avatar })
       .then((res) => {
-        loginUser({ email, password })
-          .then((res) => {
-            localStorage.setItem("jwt", res.token);
-            setIsLoggedIn(true);
-            checkToken(res.token).then((userData) => {
-              setCurrentUser(userData);
-            });
-            handleCloseClick();
-            resetRegister();
-          })
-          .catch(console.error);
+        return loginUser({ email, password });
+      })
+      .then((res) => {
+        localStorage.setItem("jwt", res.token);
+        setIsLoggedIn(true);
+        return checkToken(res.token);
+      })
+      .then((userData) => {
+        setCurrentUser(userData.data);
+        handleCloseClick();
+        resetRegister();
       })
       .catch(console.error);
   };
@@ -161,9 +154,10 @@ function App() {
       .then((res) => {
         localStorage.setItem("jwt", res.token);
         setIsLoggedIn(true);
-        checkToken(res.token).then((userData) => {
-          setCurrentUser(userData);
-        });
+        return checkToken(res.token);
+      })
+      .then((userData) => {
+        setCurrentUser(userData.data);
         handleCloseClick();
         resetLogin();
         setDisplayError("");
@@ -176,7 +170,7 @@ function App() {
   const handleEditProfileModalSubmit = ({ name, avatar }) => {
     editUser({ name, avatar }, token)
       .then((userData) => {
-        setCurrentUser(userData);
+        setCurrentUser(userData.data);
         handleCloseClick();
         resetEditProfile();
       })
@@ -186,6 +180,7 @@ function App() {
   const handleLogOutClick = () => {
     localStorage.removeItem("jwt");
     setIsLoggedIn(false);
+    setCurrentUser(null);
   };
 
   const handleResetAddItemCall = (reset) => {
@@ -264,7 +259,6 @@ function App() {
               <Route
                 path="/"
                 element={
-                  // pass clothing items as a prop
                   <Main
                     weatherData={weatherData}
                     handleCardClick={handleCardClick}
