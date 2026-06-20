@@ -11,33 +11,40 @@ function ItemCard({ item, onCardClick, onCardLike, isLoggedIn }) {
     onCardClick(item);
   };
 
-  const handleLike = ({_id, isLiked}) => {
-    onCardLike({_id, isLiked});
+  const handleLike = ({ _id, isLiked }) => {
+    onCardLike({ _id, isLiked });
   };
 
-  const isLiked = isLoggedIn && currentUser && item.likes.some(id => id === currentUser._id);
+  const isLiked =
+    isLoggedIn &&
+    currentUser &&
+    item.likes.some((id) => id === currentUser._id);
 
-  const itemLikeButtonClassName = isLiked ? (`card__image-btn--liked`):(`card__image-btn`);
+  const itemLikeButtonClassName = isLiked
+    ? `card__image-btn--liked`
+    : `card__image-btn`;
 
   return (
-      <li className="card">
-        <p className="card__title">{item.name}</p>
-        <img
-          onClick={handleCardClick}
-          className="card__image"
-          src={item.imageUrl}
-          alt={item.name}
-        />
-        {isLoggedIn ? 
-        <button 
+    <li className="card">
+      <p className="card__title">{item.name}</p>
+      <img
+        onClick={handleCardClick}
+        className="card__image"
+        src={item.imageUrl}
+        alt={item.name}
+      />
+      {isLoggedIn ? (
+        <button
           style={{
-            backgroundImage: isLiked ? `url(${likedButton})`: `url(${defaultButton})`
-          }} 
-          className={itemLikeButtonClassName} 
-          onClick={() => handleLike({_id: item._id, isLiked })}
-        >
-        </button>:null}
-      </li>
+            backgroundImage: isLiked
+              ? `url(${likedButton})`
+              : `url(${defaultButton})`,
+          }}
+          className={itemLikeButtonClassName}
+          onClick={() => handleLike({ _id: item._id, isLiked })}
+        ></button>
+      ) : null}
+    </li>
   );
 }
 

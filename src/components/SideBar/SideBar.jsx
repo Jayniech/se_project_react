@@ -15,9 +15,7 @@ export default function SideBar({ onEditProfileClick, onLogOut, isLoggedIn }) {
             className="sidebar__avatar"
           />
         ) : (
-          <span className="sidebar__avatar-ph">
-            {currentUser?.name?.[0]}
-          </span>
+          <span className="sidebar__avatar-ph">{currentUser?.name?.[0]}</span>
         )}
         <p className="sidebar__user-name">{currentUser?.data?.name}</p>
       </div>

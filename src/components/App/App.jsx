@@ -12,7 +12,13 @@ import CurrentTemperatureUnitContext from "../../contexts/CurrentTemperatureUnit
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 import AddItemModal from "../AddItemModal/AddItemModal";
 import Profile from "../Profile/Profile";
-import { getItems, addItems, deleteItems, addCardLike, removeCardLike } from "../../utils/api";
+import {
+  getItems,
+  addItems,
+  deleteItems,
+  addCardLike,
+  removeCardLike,
+} from "../../utils/api";
 import ConfirmationModal from "../ConfirmationModal/ConfirmationModal";
 import RegisterModal from "../RegisterModal/RegisterModal";
 import LoginModal from "../LoginModal/LoginModal";
@@ -90,24 +96,22 @@ function App() {
   };
 
   const handleCardLike = ({ _id, isLiked }) => {
-  !isLiked
-    ? 
-        addCardLike({_id}, token)
-        .then((updatedCard) => {
-          setClothingItems((cards) =>
-            cards.map((item) => (item._id === _id ? updatedCard.data : item))
-          );
-        })
-        .catch((err) => console.log(err))
-    :    
-        removeCardLike({_id}, token) 
-        .then((updatedCard) => {
-          setClothingItems((cards) =>
-            cards.map((item) => (item._id === _id ? updatedCard.data : item))
-          );
-        })
-        .catch((err) => console.log(err));
-};
+    !isLiked
+      ? addCardLike({ _id }, token)
+          .then((updatedCard) => {
+            setClothingItems((cards) =>
+              cards.map((item) => (item._id === _id ? updatedCard.data : item))
+            );
+          })
+          .catch((err) => console.log(err))
+      : removeCardLike({ _id }, token)
+          .then((updatedCard) => {
+            setClothingItems((cards) =>
+              cards.map((item) => (item._id === _id ? updatedCard.data : item))
+            );
+          })
+          .catch((err) => console.log(err));
+  };
 
   const handleAddItemModalSubmit = ({ name, imageUrl, weather }) => {
     addItems({ name, weather, imageUrl }, token)
@@ -163,7 +167,7 @@ function App() {
         resetLogin();
       })
       .catch((err) => {
-        setDisplayError(err.message)
+        setDisplayError(err.message);
       });
   };
 
@@ -293,13 +297,15 @@ function App() {
             onAddItemModalSubmit={handleAddItemModalSubmit}
             onResetReady={handleResetAddItemCall}
           />
-          {selectedCard && <ItemModal
-            activeModal={activeModal}
-            card={selectedCard}
-            handleCloseClick={handleCloseClick}
-            handleOverlayClick={handleOverlayClick}
-            onClick={handleDeleteModalClick}
-          />}
+          {selectedCard && (
+            <ItemModal
+              activeModal={activeModal}
+              card={selectedCard}
+              handleCloseClick={handleCloseClick}
+              handleOverlayClick={handleOverlayClick}
+              onClick={handleDeleteModalClick}
+            />
+          )}
           <ConfirmationModal
             onClose={handleCloseClick}
             isOpen={activeModal === "delete"}
