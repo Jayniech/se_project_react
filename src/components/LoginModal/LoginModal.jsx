@@ -77,7 +77,7 @@ export default function LoginModal({
           required
         />
       </label>
-      {displayError ? <p className="modal__error-msg">{displayError}</p>:""}
+      {displayError ? <p className="modal__error-msg">{displayError}</p>:null}
     </ModalWithForm>
   );
 }

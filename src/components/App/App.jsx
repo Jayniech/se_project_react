@@ -71,6 +71,7 @@ function App() {
 
   const handleSignupClick = () => {
     setActiveModal("sign-up");
+    setDisplayError("");
   };
 
   const handleEditProfileClick = () => {
