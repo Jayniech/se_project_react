@@ -1,5 +1,8 @@
-const baseUrl = "http://localhost:3001";
 import { checkResponse } from "./api";
+
+const baseUrl = process.env.NODE_ENV === "production" 
+  ? "https://api.jayniechwtwr.thrilladesign.com"
+  : "http://localhost:3001";
 
 function registerUser({ email, password, name, avatar }) {
   return fetch(`${baseUrl}/signup`, {
