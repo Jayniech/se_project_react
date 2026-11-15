@@ -1,6 +1,7 @@
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import "./RegisterModal.css";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { useForm } from "../../hooks/useForm";
 
 export default function RegisterModal({
   isOpen,
@@ -11,47 +12,29 @@ export default function RegisterModal({
   onResetReady,
   formId,
 }) {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [name, setName] = useState("");
-  const [avatar, setAvatar] = useState("");
+  const {values, handleChange, setValues} = useForm({ email:"", password:"", name:"", avatar: "" });
 
   useEffect(() => {
     onResetReady(handleReset);
   }, []);
 
-  const handleEmailChange = (e) => {
-    setEmail(e.target.value);
-  };
-
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
-  };
-
-  const handleNameChange = (e) => {
-    setName(e.target.value);
-  };
-
-  const handleAvatarChange = (e) => {
-    setAvatar(e.target.value);
-  };
-
   const checkValid = () =>
-    email.length >= 1 &&
-    password.length >= 1 &&
-    name.length >= 1 &&
-    avatar.length >= 1;
+    values.email.length >= 1 &&
+    values.password.length >= 1 &&
+    values.name.length >= 1 &&
+    values.avatar.length >= 1;
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onRegisterModalSubmit({ email, password, name, avatar });
+    onRegisterModalSubmit({ 
+      email: values.email, 
+      password: values.password, 
+      name: values.name, 
+      avatar: values.avatar });
   };
 
   const handleReset = () => {
-    setEmail("");
-    setPassword("");
-    setName("");
-    setAvatar("");
+    setValues({ email:"", password:"", name:"", avatar: "" })
   };
 
   return (
@@ -76,8 +59,8 @@ export default function RegisterModal({
           className="modal__input"
           name="email"
           placeholder="Email"
-          onChange={handleEmailChange}
-          value={email}
+          onChange={handleChange}
+          value={values.email}
           required
         />
       </label>
@@ -89,8 +72,8 @@ export default function RegisterModal({
           className="modal__input"
           name="password"
           placeholder="Password"
-          onChange={handlePasswordChange}
-          value={password}
+          onChange={handleChange}
+          value={values.password}
           required
         />
       </label>
@@ -102,8 +85,8 @@ export default function RegisterModal({
           className="modal__input"
           name="name"
           placeholder="Name"
-          onChange={handleNameChange}
-          value={name}
+          onChange={handleChange}
+          value={values.name}
           required
         />
       </label>
@@ -113,10 +96,10 @@ export default function RegisterModal({
           id="register-avatar-imageURL"
           type="url"
           className="modal__input"
-          name="link"
+          name="avatar"
           placeholder="Avatar"
-          onChange={handleAvatarChange}
-          value={avatar}
+          onChange={handleChange}
+          value={values.avatar}
           required
         />
       </label>

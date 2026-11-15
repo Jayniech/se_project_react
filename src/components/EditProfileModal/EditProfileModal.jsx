@@ -1,41 +1,31 @@
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useContext } from "react";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
+import { useForm } from "../../hooks/useForm";
 
 export default function EditProfileModal({
   isOpen,
   onClose,
   onOverlay,
-  onResetReady,
   onEditProfileModalSubmit,
   formId,
 }) {
   const currentUser = useContext(CurrentUserContext);
 
-  const [name, setName] = useState("");
-  const [avatar, setAvatar] = useState("");
-
+  const {values, handleChange, setValues} = useForm({ name:"", avatar:"" });
+  
   useEffect(() => {
   if (isOpen && currentUser) {
-    setName(currentUser.name);
-    setAvatar(currentUser.avatar);
+    setValues({ name: currentUser.name, avatar: currentUser.avatar});
   }
-}, [isOpen, currentUser]);
+  }, [isOpen, currentUser]);
 
-  const handleNameChange = (e) => {
-    setName(e.target.value);
-  };
-
-  const handleAvatarChange = (e) => {
-    setAvatar(e.target.value);
-  };
-
-  const checkValid = () => name.length >= 1 && avatar.length >= 1;
+  const checkValid = () => values.name.length >= 1 && values.avatar.length >= 1;
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onEditProfileModalSubmit({ name, avatar });
+    onEditProfileModalSubmit({ name: values.name, avatar: values.avatar });
   };
 
   return (
@@ -57,8 +47,8 @@ export default function EditProfileModal({
           className="modal__input"
           name="name"
           placeholder="Name"
-          onChange={handleNameChange}
-          value={name}
+          onChange={handleChange}
+          value={values.name}
           required
         />
       </label>
@@ -68,10 +58,10 @@ export default function EditProfileModal({
           id="edit-avatar-imageURL"
           type="url"
           className="modal__input"
-          name="link"
+          name="avatar"
           placeholder="Avatar"
-          onChange={handleAvatarChange}
-          value={avatar}
+          onChange={handleChange}
+          value={values.avatar}
           required
         />
       </label>

@@ -2,21 +2,24 @@ const baseUrl = process.env.NODE_ENV === "production"
   ? "https://api.jayniechwtwr.thrilladesign.com"
   : "http://localhost:3001";
 
+function checkResponse(res) {
+  return res.ok ? res.json() : Promise.reject(`Error: ${res.status}`);
+}
+
+function request(url, options) {
+  return fetch(url, options).then(checkResponse);
+}
+
 function getItems() {
-  return fetch(`${baseUrl}/items`)
-    .then(checkResponse)
+  return request(`${baseUrl}/items`)
     .then((items) => {
       items.reverse();
       return items;
     });
 }
 
-function checkResponse(res) {
-  return res.ok ? res.json() : Promise.reject(`Error: ${res.status}`);
-}
-
 function addItems({ name, weather, imageUrl }, token) {
-  return fetch(`${baseUrl}/items`, {
+  return request(`${baseUrl}/items`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -27,28 +30,28 @@ function addItems({ name, weather, imageUrl }, token) {
       weather,
       imageUrl,
     }),
-  }).then(checkResponse);
+  });
 }
 
 function deleteItems({ _id }, token) {
-  return fetch(`${baseUrl}/items/${_id}`, {
+  return request(`${baseUrl}/items/${_id}`, {
     method: "DELETE",
     headers: { authorization: `Bearer ${token}` },
-  }).then(checkResponse);
+  });
 }
 
 function addCardLike({ _id }, token) {
-  return fetch(`${baseUrl}/items/${_id}/likes`, {
+  return request(`${baseUrl}/items/${_id}/likes`, {
     method: "PUT",
     headers: { authorization: `Bearer ${token}` },
-  }).then(checkResponse);
+  });
 }
 
 function removeCardLike({ _id }, token) {
-  return fetch(`${baseUrl}/items/${_id}/likes`, {
+  return request(`${baseUrl}/items/${_id}/likes`, {
     method: "DELETE",
     headers: { authorization: `Bearer ${token}` },
-  }).then(checkResponse);
+  });
 }
 
 export {
