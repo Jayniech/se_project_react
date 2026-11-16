@@ -11,6 +11,7 @@ export default function RegisterModal({
   onRegisterModalSubmit,
   onResetReady,
   formId,
+  buttonText
 }) {
   const {values, handleChange, setValues} = useForm({ email:"", password:"", name:"", avatar: "" });
 
@@ -40,7 +41,7 @@ export default function RegisterModal({
   return (
     <ModalWithForm
     formId={formId}
-      buttonText="Next"
+      buttonText={buttonText}
       title="Sign-up"
       isOpen={isOpen}
       onClose={onClose}

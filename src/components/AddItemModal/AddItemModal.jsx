@@ -9,6 +9,7 @@ export default function AddItemModal({
   onAddItemModalSubmit,
   onResetReady,
   formId,
+  buttonText
 }) {
   const {values, handleChange, setValues} = useForm({ name:"", imageUrl:"", weather:"" });
 
@@ -31,7 +32,7 @@ export default function AddItemModal({
   return (
     <ModalWithForm
     formId={formId}
-      buttonText="Add garment"
+      buttonText={buttonText}
       title="New garment"
       isOpen={isOpen}
       onClose={onClose}

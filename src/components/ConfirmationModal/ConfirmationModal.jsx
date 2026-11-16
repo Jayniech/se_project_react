@@ -6,6 +6,7 @@ export default function ConfirmationModal({
   onDelete,
   selectedCard,
   onOverlay,
+  buttonText
 }) {
   return (
     <div
@@ -26,7 +27,7 @@ export default function ConfirmationModal({
             onDelete(selectedCard);
           }}
         >
-          Yes, delete item
+          {buttonText}
         </button>
         <button
           type="button"

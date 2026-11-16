@@ -10,6 +10,7 @@ export default function EditProfileModal({
   onOverlay,
   onEditProfileModalSubmit,
   formId,
+  buttonText
 }) {
   const currentUser = useContext(CurrentUserContext);
 
@@ -31,7 +32,7 @@ export default function EditProfileModal({
   return (
     <ModalWithForm
       formId={formId}
-      buttonText="Save changes"
+      buttonText={buttonText}
       title="Change profile data"
       isOpen={isOpen}
       onClose={onClose}

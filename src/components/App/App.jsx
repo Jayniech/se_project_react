@@ -50,6 +50,7 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
   const [displayError, setDisplayError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const token = localStorage.getItem("jwt");
 
@@ -113,16 +114,21 @@ function App() {
   };
 
   const handleAddItemModalSubmit = ({ name, imageUrl, weather }) => {
+    setIsLoading(true);
     addItems({ name, weather, imageUrl }, token)
       .then((res) => {
         setClothingItems((prevItems) => [res.data, ...prevItems]);
         handleCloseClick();
         resetAddItem();
       })
-      .catch(console.error);
+      .catch(console.error)
+      .finally(() => {
+        setIsLoading(false)
+      });
   };
 
   const handleDeleteModalSubmit = (selectedCard) => {
+    setIsLoading(true);
     deleteItems({ _id: selectedCard._id }, token)
       .then(() => {
         setClothingItems(
@@ -132,10 +138,14 @@ function App() {
         );
         handleCloseClick();
       })
-      .catch(console.error);
+      .catch(console.error)
+      .finally(() => {
+        setIsLoading(false)
+      });
   };
 
   const handleRegisterModalSubmit = ({ email, password, name, avatar }) => {
+    setIsLoading(true);
     registerUser({ email, password, name, avatar })
       .then((res) => {
         return loginUser({ email, password });
@@ -150,10 +160,14 @@ function App() {
         handleCloseClick();
         resetRegister();
       })
-      .catch(console.error);
+      .catch(console.error)
+      .finally(() => {
+        setIsLoading(false)
+      });
   };
 
   const handleLoginModalSubmit = ({ email, password }) => {
+    setIsLoading(true);
     loginUser({ email, password })
       .then((res) => {
         localStorage.setItem("jwt", res.token);
@@ -167,16 +181,23 @@ function App() {
       })
       .catch((err) => {
         setDisplayError(err.message);
+      })
+      .finally(() => {
+        setIsLoading(false)
       });
   };
 
   const handleEditProfileModalSubmit = ({ name, avatar }) => {
+    setIsLoading(true);
     editUser({ name, avatar }, token)
       .then((userData) => {
         setCurrentUser(userData.data);
         handleCloseClick();
       })
-      .catch(console.error);
+      .catch(console.error)
+      .finally(() => {
+        setIsLoading(false)
+      });
   };
 
   const handleLogOutClick = () => {
@@ -293,6 +314,7 @@ function App() {
             onOverlay={handleOverlayClick}
             onAddItemModalSubmit={handleAddItemModalSubmit}
             onResetReady={handleResetAddItemCall}
+            buttonText={isLoading ? "Saving..." : "Add garment"}
           />
           {selectedCard && (
             <ItemModal
@@ -309,6 +331,7 @@ function App() {
             onDelete={handleDeleteModalSubmit}
             selectedCard={selectedCard}
             onOverlay={handleOverlayClick}
+            buttonText={isLoading ? "Saving..." : "Yes, delete item"}
           />
           <RegisterModal
             formId="sign-up"
@@ -318,6 +341,7 @@ function App() {
             onOverlay={handleOverlayClick}
             onRegisterModalSubmit={handleRegisterModalSubmit}
             onResetReady={handleResetRegisterCall}
+            buttonText={isLoading ? "Saving..." : "Next"}
           />
           <LoginModal
             formId="login"
@@ -328,6 +352,7 @@ function App() {
             onLoginModalSubmit={handleLoginModalSubmit}
             onResetReady={handleResetLoginCall}
             displayError={displayError}
+            buttonText={isLoading ? "Saving..." : "Log in"}
           />
           <EditProfileModal
             formId="edit-profile"
@@ -335,6 +360,7 @@ function App() {
             onClose={handleCloseClick}
             onOverlay={handleOverlayClick}
             onEditProfileModalSubmit={handleEditProfileModalSubmit}
+            buttonText={isLoading ? "Saving..." : "Save changes"}
           />
         </div>
       </CurrentTemperatureUnitContext.Provider>

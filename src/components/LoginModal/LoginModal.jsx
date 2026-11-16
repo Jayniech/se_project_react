@@ -12,6 +12,7 @@ export default function LoginModal({
   onResetReady,
   displayError,
   formId,
+  buttonText
 }) {
   const {values, handleChange, setValues} = useForm({ email:"", password:"" });
   
@@ -33,7 +34,7 @@ export default function LoginModal({
   return (
     <ModalWithForm
       formId={formId}
-      buttonText="Log in"
+      buttonText={buttonText}
       title="Log in"
       isOpen={isOpen}
       onClose={onClose}
