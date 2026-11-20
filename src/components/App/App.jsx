@@ -113,91 +113,81 @@ function App() {
           .catch((err) => console.log(err));
   };
 
-  const handleAddItemModalSubmit = ({ name, imageUrl, weather }) => {
+  function handleSubmit(request, onError = console.error) {
     setIsLoading(true);
-    addItems({ name, weather, imageUrl }, token)
+    request()
+    .then(handleCloseClick)
+    .catch(onError)
+    .finally(() => setIsLoading(false));
+  }
+
+  const handleAddItemModalSubmit = ({ name, imageUrl, weather }) => {
+    function request() {
+      return addItems({ name, weather, imageUrl }, token)
       .then((res) => {
         setClothingItems((prevItems) => [res.data, ...prevItems]);
-        handleCloseClick();
         resetAddItem();
-      })
-      .catch(console.error)
-      .finally(() => {
-        setIsLoading(false)
       });
+    }
+    handleSubmit(request);
   };
 
   const handleDeleteModalSubmit = (selectedCard) => {
-    setIsLoading(true);
-    deleteItems({ _id: selectedCard._id }, token)
+    function request() {
+      return deleteItems({ _id: selectedCard._id }, token)
       .then(() => {
         setClothingItems(
-          clothingItems.filter((item) => {
-            return item._id !== selectedCard._id;
-          })
+          clothingItems.filter((item) =>
+             item._id !== selectedCard._id)
         );
-        handleCloseClick();
-      })
-      .catch(console.error)
-      .finally(() => {
-        setIsLoading(false)
       });
+    }
+    handleSubmit(request);
   };
 
   const handleRegisterModalSubmit = ({ email, password, name, avatar }) => {
-    setIsLoading(true);
-    registerUser({ email, password, name, avatar })
-      .then((res) => {
-        return loginUser({ email, password });
-      })
-      .then((res) => {
-        localStorage.setItem("jwt", res.token);
-        setIsLoggedIn(true);
-        return checkToken(res.token);
-      })
-      .then((userData) => {
-        setCurrentUser(userData.data);
-        handleCloseClick();
-        resetRegister();
-      })
-      .catch(console.error)
-      .finally(() => {
-        setIsLoading(false)
-      });
+    function request() {
+      return registerUser({ email, password, name, avatar })
+        .then((res) => {
+          return loginUser({ email, password });
+        })
+        .then((res) => {
+          localStorage.setItem("jwt", res.token);
+          setIsLoggedIn(true);
+          return checkToken(res.token);
+        })
+        .then((userData) => {
+          setCurrentUser(userData.data);
+          resetRegister();
+        });
+    }
+    handleSubmit(request);
   };
 
   const handleLoginModalSubmit = ({ email, password }) => {
-    setIsLoading(true);
-    loginUser({ email, password })
-      .then((res) => {
-        localStorage.setItem("jwt", res.token);
-        setIsLoggedIn(true);
-        return checkToken(res.token);
-      })
-      .then((userData) => {
-        setCurrentUser(userData.data);
-        handleCloseClick();
-        resetLogin();
-      })
-      .catch((err) => {
-        setDisplayError(err.message);
-      })
-      .finally(() => {
-        setIsLoading(false)
-      });
+    function request() {
+      return loginUser({ email, password })
+        .then((res) => {
+          localStorage.setItem("jwt", res.token);
+          setIsLoggedIn(true);
+          return checkToken(res.token);
+        })
+        .then((userData) => {
+          setCurrentUser(userData.data);
+          resetLogin();
+        });
+    }
+    handleSubmit(request, (err) => setDisplayError(err.message));
   };
 
   const handleEditProfileModalSubmit = ({ name, avatar }) => {
-    setIsLoading(true);
-    editUser({ name, avatar }, token)
-      .then((userData) => {
-        setCurrentUser(userData.data);
-        handleCloseClick();
-      })
-      .catch(console.error)
-      .finally(() => {
-        setIsLoading(false)
-      });
+    function request() {
+      return editUser({ name, avatar }, token)
+        .then((userData) => {
+          setCurrentUser(userData.data);
+        });
+    }
+    handleSubmit(request);
   };
 
   const handleLogOutClick = () => {
