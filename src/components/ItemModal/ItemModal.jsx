@@ -1,11 +1,12 @@
 import "./ItemModal.css";
 import { useContext } from "react";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
+import { useModalClose } from "../../hooks/useModalClose";
 
 function ItemModal({
-  activeModal,
+  isOpen,
   handleOverlayClick,
-  handleCloseClick,
+  onClose,
   card,
   onClick,
 }) {
@@ -17,14 +18,16 @@ function ItemModal({
     isOwn ? "" : "modal__delete-btn_hidden"
   }`;
 
+  useModalClose(isOpen, onClose);
+
   return (
     <div
       onClick={handleOverlayClick}
-      className={`modal ${activeModal === "preview" ? "modal_opened" : ""}`}
+      className={`modal ${isOpen === "preview" ? "modal_opened" : ""}`}
     >
       <div className="modal__content modal__content_type_image">
         <button
-          onClick={handleCloseClick}
+          onClick={onClose}
           type="button"
           className="modal__close-btn modal__close-btn_type_image"
         ></button>

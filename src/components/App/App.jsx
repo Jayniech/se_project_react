@@ -203,23 +203,7 @@ function App() {
       setWeatherData(filteredData);
     })
     .catch(console.error);
-  }, []); // ← empty array = runs only on mount
-
-  useEffect(() => {
-  if (!activeModal) return;
-
-    const handleEscClose = (e) => {
-      if (e.key === "Escape") {
-        handleCloseClick();
-      }
-    };
-
-    document.addEventListener("keydown", handleEscClose);
-
-    return () => {
-      document.removeEventListener("keydown", handleEscClose);
-    };
-  }, [activeModal]); // ← runs when modal changes
+  }, []);
 
   useEffect(() => {
     getItems()
@@ -296,9 +280,9 @@ function App() {
           />
           {selectedCard && (
             <ItemModal
-              activeModal={activeModal}
+              isOpen={activeModal}
               card={selectedCard}
-              handleCloseClick={handleCloseClick}
+              onClose={handleCloseClick}
               handleOverlayClick={handleOverlayClick}
               onClick={handleDeleteModalClick}
             />

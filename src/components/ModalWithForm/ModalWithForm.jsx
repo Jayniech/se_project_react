@@ -1,4 +1,5 @@
 import "./ModalWithForm.css";
+import { useModalClose } from "../../hooks/useModalClose";
 
 function ModalWithForm({
   children,
@@ -14,6 +15,9 @@ function ModalWithForm({
   isValid,
   formId
 }) {
+
+  useModalClose(isOpen, onClose);
+
   return (
     <div
       onClick={onOverlay}
