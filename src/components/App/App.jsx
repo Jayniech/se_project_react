@@ -30,7 +30,7 @@ import {
 } from "../../utils/auth";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import EditProfileModal from "../EditProfileModal/EditProfileModal";
-
+import { useReset } from "../../hooks/useReset";
 function App() {
   const [weatherData, setWeatherData] = useState({
     type: "",
@@ -44,13 +44,13 @@ function App() {
   const [activeModal, setActiveModal] = useState("");
   const [selectedCard, setSelectedCard] = useState(null);
   const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
-  const [resetAddItem, setResetAddItem] = useState(() => {});
-  const [resetRegister, setResetRegister] = useState(() => {});
-  const [resetLogin, setResetLogin] = useState(() => {});
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
   const [displayError, setDisplayError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const {values: addItemValues, handleResetCall: handleAddItemResetCall} = useReset();
+  const {values: registerValues, handleResetCall: handleRegisterResetCall} = useReset();
+  const {values: loginValues, handleResetCall: handleLoginResetCall} = useReset();
 
   const token = localStorage.getItem("jwt");
 
@@ -126,7 +126,7 @@ function App() {
       return addItems({ name, weather, imageUrl }, token)
       .then((res) => {
         setClothingItems((prevItems) => [res.data, ...prevItems]);
-        resetAddItem();
+        addItemValues();
       });
     }
     handleSubmit(request);
@@ -158,7 +158,7 @@ function App() {
         })
         .then((userData) => {
           setCurrentUser(userData.data);
-          resetRegister();
+          registerValues();
         });
     }
     handleSubmit(request);
@@ -174,7 +174,7 @@ function App() {
         })
         .then((userData) => {
           setCurrentUser(userData.data);
-          resetLogin();
+          loginValues();
         });
     }
     handleSubmit(request, (err) => setDisplayError(err.message));
@@ -194,18 +194,6 @@ function App() {
     localStorage.removeItem("jwt");
     setIsLoggedIn(false);
     setCurrentUser(null);
-  };
-
-  const handleResetAddItemCall = (reset) => {
-    setResetAddItem(() => reset);
-  };
-
-  const handleResetRegisterCall = (reset) => {
-    setResetRegister(() => reset);
-  };
-
-  const handleResetLoginCall = (reset) => {
-    setResetLogin(() => reset);
   };
 
   useEffect(() => {
@@ -303,7 +291,7 @@ function App() {
             onClose={handleCloseClick}
             onOverlay={handleOverlayClick}
             onAddItemModalSubmit={handleAddItemModalSubmit}
-            onResetReady={handleResetAddItemCall}
+            onResetReady={handleAddItemResetCall}
             buttonText={isLoading ? "Saving..." : "Add garment"}
           />
           {selectedCard && (
@@ -330,7 +318,7 @@ function App() {
             onLogin={handleLoginClick}
             onOverlay={handleOverlayClick}
             onRegisterModalSubmit={handleRegisterModalSubmit}
-            onResetReady={handleResetRegisterCall}
+            onResetReady={handleRegisterResetCall}
             buttonText={isLoading ? "Saving..." : "Next"}
           />
           <LoginModal
@@ -340,7 +328,7 @@ function App() {
             onSignup={handleSignupClick}
             onOverlay={handleOverlayClick}
             onLoginModalSubmit={handleLoginModalSubmit}
-            onResetReady={handleResetLoginCall}
+            onResetReady={handleLoginResetCall}
             displayError={displayError}
             buttonText={isLoading ? "Saving..." : "Log in"}
           />
