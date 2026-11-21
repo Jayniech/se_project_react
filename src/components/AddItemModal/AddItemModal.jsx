@@ -5,7 +5,6 @@ import { useForm } from "../../hooks/useForm";
 export default function AddItemModal({
   isOpen,
   onClose,
-  onOverlay,
   onAddItemModalSubmit,
   onResetReady,
   formId,
@@ -36,7 +35,6 @@ export default function AddItemModal({
       title="New garment"
       isOpen={isOpen}
       onClose={onClose}
-      onOverlay={onOverlay}
       isValid={checkValid()}
       onSubmit={handleSubmit}
     >

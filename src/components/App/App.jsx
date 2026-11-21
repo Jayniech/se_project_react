@@ -89,12 +89,6 @@ function App() {
     setDisplayError("");
   };
 
-  const handleOverlayClick = (event) => {
-    if (event.target === event.currentTarget) {
-      handleCloseClick();
-    }
-  };
-
   const handleCardLike = ({ _id, isLiked }) => {
     !isLiked
       ? addCardLike({ _id }, token)
@@ -273,7 +267,6 @@ function App() {
             formId="add-garment"
             isOpen={activeModal === "add-garment"}
             onClose={handleCloseClick}
-            onOverlay={handleOverlayClick}
             onAddItemModalSubmit={handleAddItemModalSubmit}
             onResetReady={handleAddItemResetCall}
             buttonText={isLoading ? "Saving..." : "Add garment"}
@@ -283,7 +276,6 @@ function App() {
               isOpen={activeModal}
               card={selectedCard}
               onClose={handleCloseClick}
-              handleOverlayClick={handleOverlayClick}
               onClick={handleDeleteModalClick}
             />
           )}
@@ -292,7 +284,6 @@ function App() {
             isOpen={activeModal === "delete"}
             onDelete={handleDeleteModalSubmit}
             selectedCard={selectedCard}
-            onOverlay={handleOverlayClick}
             buttonText={isLoading ? "Saving..." : "Yes, delete item"}
           />
           <RegisterModal
@@ -300,7 +291,6 @@ function App() {
             isOpen={activeModal === "sign-up"}
             onClose={handleCloseClick}
             onLogin={handleLoginClick}
-            onOverlay={handleOverlayClick}
             onRegisterModalSubmit={handleRegisterModalSubmit}
             onResetReady={handleRegisterResetCall}
             buttonText={isLoading ? "Saving..." : "Next"}
@@ -310,7 +300,6 @@ function App() {
             isOpen={activeModal === "login"}
             onClose={handleCloseClick}
             onSignup={handleSignupClick}
-            onOverlay={handleOverlayClick}
             onLoginModalSubmit={handleLoginModalSubmit}
             onResetReady={handleLoginResetCall}
             displayError={displayError}
@@ -320,7 +309,6 @@ function App() {
             formId="edit-profile"
             isOpen={activeModal === "edit-profile"}
             onClose={handleCloseClick}
-            onOverlay={handleOverlayClick}
             onEditProfileModalSubmit={handleEditProfileModalSubmit}
             buttonText={isLoading ? "Saving..." : "Save changes"}
           />

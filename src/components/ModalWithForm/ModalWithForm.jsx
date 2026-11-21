@@ -1,5 +1,6 @@
 import "./ModalWithForm.css";
 import { useModalClose } from "../../hooks/useModalClose";
+import { useRef } from "react";
 
 function ModalWithForm({
   children,
@@ -7,7 +8,6 @@ function ModalWithForm({
   title,
   isOpen,
   onClose,
-  onOverlay,
   onSubmit,
   extraButtonText,
   extraButtonOnClick,
@@ -16,12 +16,14 @@ function ModalWithForm({
   formId
 }) {
 
-  useModalClose(isOpen, onClose);
+  const overlayRef = useRef(null);
+  
+  useModalClose(isOpen, onClose, overlayRef);
 
   return (
     <div
-      onClick={onOverlay}
       className={`modal ${isOpen ? "modal_opened" : ""}`}
+      ref={overlayRef}
     >
       <div className="modal__content">
         <button onClick={onClose} type="button" className="modal__close-btn" />
